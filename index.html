@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>برنامج متين - جدول المقابلات والقبول</title>
+
+<title>برنامج متين 2</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
+
 *{
   margin:0;
   padding:0;
@@ -32,7 +35,6 @@ body{
 
 h1{
   color:#1a3a5c;
-  font-size:24px;
   margin-bottom:10px;
 }
 
@@ -41,7 +43,6 @@ h1{
   margin-bottom:20px;
   border-right:4px solid #d4a853;
   padding-right:12px;
-  font-size:14px;
 }
 
 .stats{
@@ -66,7 +67,6 @@ h1{
 
 .stat-label{
   font-size:11px;
-  margin-top:5px;
 }
 
 .bulk-area{
@@ -105,16 +105,12 @@ h1{
   flex-wrap:wrap;
 }
 
-.controls input,
-.controls select{
-  padding:10px 12px;
+.controls input{
+  flex:1;
+  padding:10px;
   border:2px solid #e0e8f0;
   border-radius:10px;
   font-family:'Cairo',sans-serif;
-}
-
-.search{
-  flex:1;
 }
 
 .controls button{
@@ -135,7 +131,7 @@ h1{
 table{
   width:100%;
   border-collapse:collapse;
-  min-width:750px;
+  min-width:850px;
 }
 
 th{
@@ -179,6 +175,7 @@ tr:hover{
 
 .day-select,
 .time-hour,
+.time-minute,
 .time-ampm{
   padding:6px;
   border:1px solid #ddd;
@@ -187,7 +184,15 @@ tr:hover{
 }
 
 .time-hour{
-  width:55px;
+  width:60px;
+}
+
+.time-minute{
+  width:70px;
+}
+
+.time-ampm{
+  width:90px;
 }
 
 .btn-interview,
@@ -250,14 +255,8 @@ tr:hover{
   text-align:center;
   background:#f0f4f8;
   border-radius:12px;
-  font-size:12px;
 }
 
-@media(max-width:768px){
-  td,th{
-    font-size:11px;
-  }
-}
 </style>
 </head>
 
@@ -265,81 +264,104 @@ tr:hover{
 
 <div class="container">
 
-  <h1>📖 برنامج متين 2</h1>
+<h1>📖 برنامج متين 2</h1>
 
-  <div class="sub">
-    نظام إدارة المقابلات والقبول - مزامنة مباشرة بين جميع الأجهزة 🔥
-  </div>
+<div class="sub">
+نظام إدارة المقابلات والقبول - مزامنة مباشرة بين كل الأجهزة 🔥
+</div>
 
-  <div class="stats">
-    <div class="stat-card">
-      <div class="stat-number" id="total">0</div>
-      <div class="stat-label">إجمالي الطالبات</div>
-    </div>
+<div class="stats">
 
-    <div class="stat-card">
-      <div class="stat-number" id="interviewed">0</div>
-      <div class="stat-label">تمت المقابلة</div>
-    </div>
+<div class="stat-card">
+<div class="stat-number" id="total">0</div>
+<div class="stat-label">إجمالي الطالبات</div>
+</div>
 
-    <div class="stat-card">
-      <div class="stat-number" id="pendingCount">0</div>
-      <div class="stat-label">لم تتم</div>
-    </div>
+<div class="stat-card">
+<div class="stat-number" id="interviewed">0</div>
+<div class="stat-label">تمت المقابلة</div>
+</div>
 
-    <div class="stat-card">
-      <div class="stat-number" id="accepted">0</div>
-      <div class="stat-label">مقبولة</div>
-    </div>
+<div class="stat-card">
+<div class="stat-number" id="pendingCount">0</div>
+<div class="stat-label">لم تتم</div>
+</div>
 
-    <div class="stat-card">
-      <div class="stat-number" id="rejected">0</div>
-      <div class="stat-label">غير مقبولة</div>
-    </div>
-  </div>
+<div class="stat-card">
+<div class="stat-number" id="accepted">0</div>
+<div class="stat-label">مقبولة</div>
+</div>
 
-  <div class="bulk-area">
-    <textarea id="bulkNames" placeholder="كل اسم في سطر"></textarea>
-    <button onclick="addBulkNames()">➕ إضافة الكل</button>
-  </div>
+<div class="stat-card">
+<div class="stat-number" id="rejected">0</div>
+<div class="stat-label">غير مقبولة</div>
+</div>
 
-  <div class="controls">
-    <input type="text" id="search" class="search" placeholder="🔍 بحث..." onkeyup="filterTable()">
+</div>
 
-    <button onclick="clearAll()">🗑️ حذف الكل</button>
-  </div>
+<div class="bulk-area">
 
-  <div class="table-wrapper">
-    <table>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>اسم الطالبة</th>
-          <th>اليوم</th>
-          <th>الساعة</th>
-          <th>المقابلة</th>
-          <th>القبول</th>
-          <th></th>
-        </tr>
-      </thead>
+<textarea id="bulkNames" placeholder="كل اسم في سطر"></textarea>
 
-      <tbody id="tableBody"></tbody>
-    </table>
-  </div>
+<button onclick="addBulkNames()">
+➕ إضافة الكل
+</button>
 
-  <button class="add-btn" onclick="addRow()">
-    + إضافة طالبة
-  </button>
+</div>
 
-  <div class="footer">
-    ☁️ البيانات مشتركة بين كل الأجهزة
-  </div>
+<div class="controls">
+
+<input
+type="text"
+id="search"
+placeholder="🔍 بحث..."
+onkeyup="filterTable()"
+>
+
+<button onclick="clearAll()">
+🗑️ حذف الكل
+</button>
+
+</div>
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+<th>#</th>
+<th>اسم الطالبة</th>
+<th>اليوم</th>
+<th>الوقت</th>
+<th>المقابلة</th>
+<th>القبول</th>
+<th></th>
+</tr>
+
+</thead>
+
+<tbody id="tableBody"></tbody>
+
+</table>
+
+</div>
+
+<button class="add-btn" onclick="addRow()">
++ إضافة طالبة
+</button>
+
+<div class="footer">
+☁️ البيانات محفوظة على Firebase ومشتركة بين كل الأجهزة
+</div>
 
 </div>
 
 <script type="module">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 
 import {
   getFirestore,
@@ -350,7 +372,8 @@ import {
   doc,
   onSnapshot,
   getDocs
-} from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+}
+from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBIVtK3tNHSnQW6Pfq-cZgSvLmTX6kaeTk",
@@ -364,22 +387,42 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const DAYS = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
-const HOURS = ['1','2','3','4','5','6','7','8','9','10','11','12'];
+const DAYS = [
+'الأحد',
+'الاثنين',
+'الثلاثاء',
+'الأربعاء',
+'الخميس',
+'الجمعة',
+'السبت'
+];
+
+const HOURS = [
+'1','2','3','4','5','6',
+'7','8','9','10','11','12'
+];
+
+const MINUTES = [
+'00','05','10','15','20','25',
+'30','35','40','45','50','55'
+];
 
 let students = [];
 
 function escapeHtml(str){
+
   return (str || '')
-    .replace(/&/g,'&amp;')
-    .replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;');
+  .replace(/&/g,'&amp;')
+  .replace(/</g,'&lt;')
+  .replace(/>/g,'&gt;');
+
 }
 
 function showToast(msg){
+
   const toast = document.createElement('div');
 
-  toast.textContent = msg;
+  toast.innerText = msg;
 
   toast.style.cssText = `
     position:fixed;
@@ -398,318 +441,416 @@ function showToast(msg){
   setTimeout(()=>{
     toast.remove();
   },2000);
+
 }
 
 function updateStats(){
-  document.getElementById('total').innerText = students.length;
+
+  document.getElementById('total').innerText =
+  students.length;
 
   document.getElementById('interviewed').innerText =
-    students.filter(s=>s.interview==='done').length;
+  students.filter(s=>s.interview==='done').length;
 
   document.getElementById('pendingCount').innerText =
-    students.filter(s=>s.interview==='pending').length;
+  students.filter(s=>s.interview==='pending').length;
 
   document.getElementById('accepted').innerText =
-    students.filter(s=>s.accepted==='accepted').length;
+  students.filter(s=>s.accepted==='accepted').length;
 
   document.getElementById('rejected').innerText =
-    students.filter(s=>s.accepted==='rejected').length;
+  students.filter(s=>s.accepted==='rejected').length;
+
 }
 
 function renderTable(filteredData){
 
-  const data = filteredData || students;
+const data = filteredData || students;
 
-  const tbody = document.getElementById('tableBody');
+const tbody = document.getElementById('tableBody');
 
-  if(data.length === 0){
-    tbody.innerHTML = `
-      <tr>
-        <td colspan="7" style="padding:30px">
-          لا توجد بيانات
-        </td>
-      </tr>
-    `;
-    return;
-  }
+if(data.length === 0){
 
-  tbody.innerHTML = '';
+tbody.innerHTML = `
+<tr>
+<td colspan="7" style="padding:30px">
+لا توجد بيانات
+</td>
+</tr>
+`;
 
-  data.forEach((s,index)=>{
+return;
 
-    const interviewClass =
-      s.interview === 'done'
-      ? 'btn-done'
-      : 'btn-pending';
-
-    const interviewText =
-      s.interview === 'done'
-      ? '✅ تمت'
-      : '⏳ لم تتم';
-
-    let acceptClass = 'btn-na';
-    let acceptText = '— لم يحدد';
-
-    if(s.accepted === 'accepted'){
-      acceptClass = 'btn-accepted';
-      acceptText = '✔️ مقبولة';
-    }
-
-    if(s.accepted === 'rejected'){
-      acceptClass = 'btn-rejected';
-      acceptText = '✖️ غير مقبولة';
-    }
-
-    tbody.innerHTML += `
-      <tr>
-
-        <td>${index + 1}</td>
-
-        <td>
-          <div class="name-cell">
-
-            <input
-              type="text"
-              id="name-${s.id}"
-              value="${escapeHtml(s.name)}"
-            >
-
-            <button
-              class="btn-save"
-              onclick="updateName('${s.id}')"
-            >
-              💾
-            </button>
-
-          </div>
-        </td>
-
-        <td>
-
-          <select
-            class="day-select"
-            onchange="updateField('${s.id}','day',this.value)"
-          >
-
-            <option value="">-- اليوم --</option>
-
-            ${DAYS.map(d=>`
-              <option
-                ${s.day===d?'selected':''}
-              >
-                ${d}
-              </option>
-            `).join('')}
-
-          </select>
-
-        </td>
-
-        <td>
-
-          <select
-            class="time-hour"
-            onchange="updateField('${s.id}','hour',this.value)"
-          >
-
-            <option value="">س</option>
-
-            ${HOURS.map(h=>`
-              <option
-                ${s.hour===h?'selected':''}
-              >
-                ${h}
-              </option>
-            `).join('')}
-
-          </select>
-
-        </td>
-
-        <td>
-
-          <button
-            class="btn-interview ${interviewClass}"
-            onclick="toggleInterview('${s.id}','${s.interview}')"
-          >
-            ${interviewText}
-          </button>
-
-        </td>
-
-        <td>
-
-          <button
-            class="btn-accept ${acceptClass}"
-            onclick="toggleAcceptance('${s.id}','${s.accepted}','${s.interview}')"
-          >
-            ${acceptText}
-          </button>
-
-        </td>
-
-        <td>
-
-          <button
-            class="btn-delete"
-            onclick="deleteStudent('${s.id}')"
-          >
-            🗑️
-          </button>
-
-        </td>
-
-      </tr>
-    `;
-  });
-
-  updateStats();
 }
 
-onSnapshot(collection(db,"students"), (snapshot)=>{
+tbody.innerHTML = '';
 
-  students = [];
+data.forEach((s,index)=>{
 
-  snapshot.forEach((docItem)=>{
+const interviewClass =
+s.interview === 'done'
+? 'btn-done'
+: 'btn-pending';
 
-    students.push({
-      id: docItem.id,
-      ...docItem.data()
-    });
+const interviewText =
+s.interview === 'done'
+? '✅ تمت'
+: '⏳ لم تتم';
 
-  });
+let acceptClass = 'btn-na';
+let acceptText = '— لم يحدد';
 
-  renderTable();
+if(s.accepted === 'accepted'){
+acceptClass = 'btn-accepted';
+acceptText = '✔️ مقبولة';
+}
+
+if(s.accepted === 'rejected'){
+acceptClass = 'btn-rejected';
+acceptText = '✖️ غير مقبولة';
+}
+
+tbody.innerHTML += `
+
+<tr>
+
+<td>${index + 1}</td>
+
+<td>
+
+<div class="name-cell">
+
+<input
+type="text"
+id="name-${s.id}"
+value="${escapeHtml(s.name)}"
+>
+
+<button
+class="btn-save"
+onclick="updateName('${s.id}')"
+>
+💾
+</button>
+
+</div>
+
+</td>
+
+<td>
+
+<select
+class="day-select"
+onchange="updateField('${s.id}','day',this.value)"
+>
+
+<option value="">-- اليوم --</option>
+
+${DAYS.map(d=>`
+
+<option
+value="${d}"
+${s.day===d?'selected':''}
+>
+
+${d}
+
+</option>
+
+`).join('')}
+
+</select>
+
+</td>
+
+<td>
+
+<select
+class="time-hour"
+onchange="updateField('${s.id}','hour',this.value)"
+>
+
+<option value="">ساعة</option>
+
+${HOURS.map(h=>`
+
+<option
+value="${h}"
+${s.hour===h?'selected':''}
+>
+
+${h}
+
+</option>
+
+`).join('')}
+
+</select>
+
+:
+
+<select
+class="time-minute"
+onchange="updateField('${s.id}','minute',this.value)"
+>
+
+<option value="">دقيقة</option>
+
+${MINUTES.map(m=>`
+
+<option
+value="${m}"
+${s.minute===m?'selected':''}
+>
+
+${m}
+
+</option>
+
+`).join('')}
+
+</select>
+
+<select
+class="time-ampm"
+onchange="updateField('${s.id}','ampm',this.value)"
+>
+
+<option
+value="ص"
+${s.ampm==='ص'?'selected':''}
+>
+
+صباحاً
+
+</option>
+
+<option
+value="م"
+${s.ampm==='م'?'selected':''}
+>
+
+مساءً
+
+</option>
+
+</select>
+
+</td>
+
+<td>
+
+<button
+class="btn-interview ${interviewClass}"
+onclick="toggleInterview('${s.id}','${s.interview}')"
+>
+
+${interviewText}
+
+</button>
+
+</td>
+
+<td>
+
+<button
+class="btn-accept ${acceptClass}"
+onclick="toggleAcceptance('${s.id}','${s.accepted}','${s.interview}')"
+>
+
+${acceptText}
+
+</button>
+
+</td>
+
+<td>
+
+<button
+class="btn-delete"
+onclick="deleteStudent('${s.id}')"
+>
+
+🗑️
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+updateStats();
+
+}
+
+onSnapshot(collection(db,"students"),(snapshot)=>{
+
+students = [];
+
+snapshot.forEach((docItem)=>{
+
+students.push({
+id:docItem.id,
+...docItem.data()
+});
+
+});
+
+renderTable();
+
 });
 
 window.addRow = async function(){
 
-  await addDoc(collection(db,"students"),{
-    name:'',
-    day:'',
-    hour:'',
-    interview:'pending',
-    accepted:'na'
-  });
+await addDoc(collection(db,"students"),{
 
-  showToast('تمت الإضافة');
+name:'',
+day:'',
+hour:'',
+minute:'00',
+ampm:'ص',
+interview:'pending',
+accepted:'na'
+
+});
+
+showToast('تمت الإضافة');
+
 }
 
 window.addBulkNames = async function(){
 
-  const text =
-    document.getElementById('bulkNames').value;
+const text =
+document.getElementById('bulkNames').value;
 
-  if(!text.trim()) return;
+if(!text.trim()) return;
 
-  const names =
-    text.split('\n').filter(n=>n.trim());
+const names =
+text.split('\n').filter(n=>n.trim());
 
-  for(const name of names){
+for(const name of names){
 
-    await addDoc(collection(db,"students"),{
-      name:name.trim(),
-      day:'',
-      hour:'',
-      interview:'pending',
-      accepted:'na'
-    });
+await addDoc(collection(db,"students"),{
 
-  }
+name:name.trim(),
+day:'',
+hour:'',
+minute:'00',
+ampm:'ص',
+interview:'pending',
+accepted:'na'
 
-  document.getElementById('bulkNames').value='';
+});
 
-  showToast('تمت الإضافة');
+}
+
+document.getElementById('bulkNames').value='';
+
+showToast('تمت إضافة الأسماء');
+
 }
 
 window.updateName = async function(id){
 
-  const name =
-    document.getElementById(`name-${id}`).value;
+const name =
+document.getElementById(`name-${id}`).value;
 
-  await updateDoc(doc(db,"students",id),{
-    name:name
-  });
+await updateDoc(doc(db,"students",id),{
+name:name
+});
 
-  showToast('تم الحفظ');
+showToast('تم الحفظ');
+
 }
 
 window.updateField = async function(id,field,value){
 
-  await updateDoc(doc(db,"students",id),{
-    [field]: value
-  });
+await updateDoc(doc(db,"students",id),{
+[field]:value
+});
+
 }
 
 window.toggleInterview = async function(id,current){
 
-  const newValue =
-    current === 'done'
-    ? 'pending'
-    : 'done';
+const newValue =
+current === 'done'
+? 'pending'
+: 'done';
 
-  await updateDoc(doc(db,"students",id),{
-    interview:newValue
-  });
+await updateDoc(doc(db,"students",id),{
+interview:newValue
+});
+
 }
 
 window.toggleAcceptance = async function(id,current,interview){
 
-  if(interview !== 'done'){
-    alert('يجب إجراء المقابلة أولاً');
-    return;
-  }
+if(interview !== 'done'){
+alert('يجب إجراء المقابلة أولاً');
+return;
+}
 
-  const order = ['na','accepted','rejected'];
+const order = ['na','accepted','rejected'];
 
-  const newStatus =
-    order[(order.indexOf(current)+1)%3];
+const newStatus =
+order[(order.indexOf(current)+1)%3];
 
-  await updateDoc(doc(db,"students",id),{
-    accepted:newStatus
-  });
+await updateDoc(doc(db,"students",id),{
+accepted:newStatus
+});
+
 }
 
 window.deleteStudent = async function(id){
 
-  if(confirm('حذف الطالبة؟')){
+if(confirm('حذف الطالبة؟')){
 
-    await deleteDoc(doc(db,"students",id));
+await deleteDoc(doc(db,"students",id));
 
-    showToast('تم الحذف');
-  }
+showToast('تم الحذف');
+
+}
+
 }
 
 window.clearAll = async function(){
 
-  if(!confirm('حذف جميع البيانات؟')) return;
+if(!confirm('حذف جميع البيانات؟')) return;
 
-  const snapshot =
-    await getDocs(collection(db,"students"));
+const snapshot =
+await getDocs(collection(db,"students"));
 
-  for(const item of snapshot.docs){
+for(const item of snapshot.docs){
 
-    await deleteDoc(doc(db,"students",item.id));
-  }
+await deleteDoc(doc(db,"students",item.id));
 
-  showToast('تم حذف الكل');
+}
+
+showToast('تم حذف الكل');
+
 }
 
 window.filterTable = function(){
 
-  const search =
-    document.getElementById('search')
-    .value
-    .toLowerCase();
+const search =
+document.getElementById('search')
+.value
+.toLowerCase();
 
-  const filtered =
-    students.filter(s=>
-      (s.name || '')
-      .toLowerCase()
-      .includes(search)
-    );
+const filtered =
+students.filter(s=>
+(s.name || '')
+.toLowerCase()
+.includes(search)
+);
 
-  renderTable(filtered);
+renderTable(filtered);
+
 }
 
 </script>
