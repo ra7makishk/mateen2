@@ -2,8 +2,8 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>جدول المقابلات والقبول - برنامج متين</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+<title>برنامج متين - جدول المقابلات والقبول (Firebase)</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -46,91 +46,317 @@
   }
 
   .header-inner {
-    max-width: 1300px;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0 1rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 68px;
+    height: auto;
+    min-height: 68px;
+    gap: 15px;
+    flex-wrap: wrap;
   }
 
-  .logo { display: flex; align-items: center; gap: 12px; }
-  .logo-icon { width: 40px; height: 40px; background: var(--accent); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
-  .logo-text h1 { font-size: 17px; font-weight: 700; color: #fff; }
-  .logo-text span { font-size: 12px; color: rgba(255,255,255,0.6); }
+  .logo { display: flex; align-items: center; gap: 8px; }
+  .logo-icon { width: 36px; height: 36px; background: var(--accent); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+  .logo-text h1 { font-size: 15px; font-weight: 700; color: #fff; }
+  .logo-text span { font-size: 10px; color: rgba(255,255,255,0.6); }
 
-  .header-actions { display: flex; gap: 10px; }
+  .header-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  
   .btn {
-    display: inline-flex; align-items: center; gap: 7px;
-    padding: 8px 18px; border-radius: var(--radius);
-    font-family: 'Cairo', sans-serif; font-size: 13px; font-weight: 600;
-    cursor: pointer; border: none;
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 6px 12px; border-radius: var(--radius);
+    font-family: 'Cairo', sans-serif; font-size: 12px; font-weight: 600;
+    cursor: pointer; border: none; transition: all 0.2s;
   }
   .btn-primary { background: var(--accent); color: var(--primary); }
-  .btn-primary:hover { background: var(--accent-light); }
+  .btn-primary:hover { background: var(--accent-light); transform: translateY(-1px); }
   .btn-outline { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.3); }
   .btn-outline:hover { background: rgba(255,255,255,0.1); }
   .btn-danger { background: var(--danger-bg); color: var(--danger); border: 1px solid #f5c6c6; }
   .btn-danger:hover { background: #f9dddd; }
   .btn-success { background: var(--success-bg); color: var(--success); border: 1px solid #a7e3c8; }
   .btn-success:hover { background: #d4f5e7; }
+  .btn-warning { background: var(--warning-bg); color: var(--warning); border: 1px solid #fde68a; }
+  .btn-warning:hover { background: #fef3c7; }
 
-  .stats-bar { background: var(--primary-light); padding: 12px 2rem; }
-  .stats-inner { max-width: 1300px; margin: 0 auto; display: flex; gap: 1.5rem; flex-wrap: wrap; }
-  .stat { display: flex; align-items: center; gap: 8px; color: rgba(255,255,255,0.85); font-size: 13px; }
-  .stat strong { color: var(--accent-light); font-size: 18px; }
+  .stats-bar { background: var(--primary-light); padding: 10px 1rem; overflow-x: auto; }
+  .stats-inner { max-width: 1400px; margin: 0 auto; display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+  .stat { display: flex; align-items: center; gap: 6px; color: rgba(255,255,255,0.85); font-size: 12px; white-space: nowrap; }
+  .stat strong { color: var(--accent-light); font-size: 16px; }
 
-  main { max-width: 1300px; margin: 0 auto; padding: 2rem; }
-  .controls { display: flex; justify-content: space-between; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 12px; }
-  .search-box { position: relative; flex: 1; max-width: 320px; }
-  .search-box input { width: 100%; padding: 9px 14px 9px 38px; border: 1.5px solid var(--border); border-radius: var(--radius); font-family: 'Cairo', sans-serif; }
-  .filter-group { display: flex; gap: 8px; flex-wrap: wrap; }
-  .filter-group select { padding: 8px 14px; border: 1.5px solid var(--border); border-radius: var(--radius); font-family: 'Cairo', sans-serif; background: white; cursor: pointer; }
+  main { max-width: 1400px; margin: 0 auto; padding: 1rem; }
 
-  .table-card { background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow); overflow: hidden; border: 1px solid var(--border); }
-  .table-wrapper { overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; min-width: 900px; }
+  .connection-status {
+    background: var(--surface2);
+    border-radius: var(--radius);
+    padding: 8px 15px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 12px;
+  }
+  .status-online { color: var(--success); }
+  .status-offline { color: var(--danger); }
+  .sync-btn { background: none; border: none; color: var(--primary-light); cursor: pointer; font-size: 12px; }
+
+  .bulk-add-panel { 
+    background: var(--surface2); 
+    border-radius: var(--radius); 
+    padding: 15px; 
+    margin-bottom: 20px; 
+    display: flex; 
+    flex-direction: column;
+    gap: 12px; 
+  }
+  .bulk-add-panel textarea { 
+    width: 100%; 
+    padding: 12px; 
+    border: 1.5px solid var(--border); 
+    border-radius: var(--radius); 
+    font-family: 'Cairo', sans-serif; 
+    font-size: 13px; 
+    min-height: 100px; 
+    resize: vertical; 
+  }
+  .bulk-add-panel button { align-self: flex-start; }
+
+  .controls { 
+    display: flex; 
+    flex-direction: column;
+    gap: 12px; 
+    margin-bottom: 1.5rem; 
+  }
+  .search-box { width: 100%; }
+  .search-box input { 
+    width: 100%; 
+    padding: 10px 14px; 
+    border: 1.5px solid var(--border); 
+    border-radius: var(--radius); 
+    font-family: 'Cairo', sans-serif; 
+    font-size: 13px; 
+  }
+  .filter-group { 
+    display: flex; 
+    gap: 8px; 
+    flex-wrap: wrap; 
+    justify-content: flex-start;
+  }
+  .filter-group select, .filter-group button { 
+    padding: 8px 12px; 
+    border: 1.5px solid var(--border); 
+    border-radius: var(--radius); 
+    font-family: 'Cairo', sans-serif; 
+    font-size: 12px; 
+    background: white; 
+    cursor: pointer; 
+    flex: 1 0 auto;
+    min-width: 110px;
+  }
+
+  .table-card { 
+    background: var(--surface); 
+    border-radius: var(--radius-lg); 
+    box-shadow: var(--shadow); 
+    overflow: hidden; 
+    border: 1px solid var(--border); 
+  }
+  .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  
+  table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    min-width: 780px;
+  }
   thead { background: var(--primary); }
-  thead th { color: white; padding: 13px 12px; text-align: center; font-size: 12px; }
+  thead th { 
+    color: white; 
+    padding: 12px 8px; 
+    text-align: center; 
+    font-size: 11px; 
+    font-weight: 600;
+    white-space: nowrap;
+  }
   tbody tr { border-bottom: 1px solid var(--border); transition: background 0.12s; }
   tbody tr:hover { background: #f8f9fd; }
-  tbody td { padding: 8px 12px; text-align: center; font-size: 13.5px; }
+  tbody td { padding: 8px 6px; text-align: center; font-size: 12px; }
 
-  .name-cell { display: flex; gap: 6px; align-items: center; }
-  .name-cell input { flex: 1; padding: 6px 8px; border: 1.5px solid transparent; border-radius: 6px; font-family: 'Cairo', sans-serif; font-size: 13.5px; background: transparent; }
+  .name-cell { display: flex; gap: 6px; align-items: center; flex-wrap: nowrap; }
+  .name-cell input { 
+    flex: 1; 
+    padding: 6px 6px; 
+    border: 1.5px solid transparent; 
+    border-radius: 6px; 
+    font-family: 'Cairo', sans-serif; 
+    font-size: 12px; 
+    background: transparent; 
+    min-width: 100px;
+  }
   .name-cell input:focus { outline: none; border-color: var(--primary-light); background: white; }
-  .save-name-btn { background: none; border: none; cursor: pointer; color: var(--success); font-size: 16px; padding: 4px 8px; border-radius: 6px; }
+  .save-name-btn { 
+    background: none; 
+    border: none; 
+    cursor: pointer; 
+    color: var(--success); 
+    font-size: 14px; 
+    padding: 4px 6px; 
+    border-radius: 6px; 
+    white-space: nowrap;
+  }
   .save-name-btn:hover { background: var(--success-bg); }
 
-  .day-select, .time-input { width: 100%; padding: 6px 8px; border: 1.5px solid transparent; border-radius: 6px; font-family: 'Cairo', sans-serif; text-align: center; background: transparent; cursor: pointer; }
-  .day-select:hover, .time-input:hover { background: var(--surface2); }
-  .day-select:focus, .time-input:focus { outline: none; border-color: var(--primary-light); background: white; }
+  .day-select, .time-hour, .time-ampm { 
+    padding: 6px 6px; 
+    border: 1.5px solid transparent; 
+    border-radius: 6px; 
+    font-family: 'Cairo', sans-serif; 
+    font-size: 12px; 
+    text-align: center; 
+    background: transparent; 
+    cursor: pointer; 
+  }
+  .day-select:hover, .time-hour:hover, .time-ampm:hover { background: var(--surface2); }
+  .day-select:focus, .time-hour:focus, .time-ampm:focus { outline: none; border-color: var(--primary-light); background: white; }
 
-  .toggle-btn { padding: 5px 12px; border-radius: 20px; border: none; cursor: pointer; font-family: 'Cairo', sans-serif; font-size: 12px; font-weight: 600; transition: all 0.18s; }
+  .time-wrapper {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+  }
+  .time-hour { width: 55px; }
+  .time-ampm { width: 60px; }
+
+  .toggle-btn { 
+    padding: 4px 10px; 
+    border-radius: 20px; 
+    border: none; 
+    cursor: pointer; 
+    font-family: 'Cairo', sans-serif; 
+    font-size: 11px; 
+    font-weight: 600; 
+    transition: all 0.18s; 
+    white-space: nowrap;
+  }
   .toggle-btn.pending { background: var(--surface2); color: var(--text-muted); border: 1.5px solid var(--border); }
   .toggle-btn.done { background: var(--success-bg); color: var(--success); border: 1.5px solid #a7e3c8; }
   .toggle-btn.accepted { background: #e8f4ff; color: var(--primary-light); border: 1.5px solid #b3d4f5; }
   .toggle-btn.rejected { background: var(--danger-bg); color: var(--danger); border: 1.5px solid #f5c6c6; }
   .toggle-btn.na { background: #f5f5f5; color: #b0bac9; border: 1.5px solid #e0e0e0; }
 
-  .del-btn { background: none; border: none; cursor: pointer; color: #b0bac9; padding: 5px; border-radius: 8px; transition: all 0.15s; }
+  .del-btn { 
+    background: none; 
+    border: none; 
+    cursor: pointer; 
+    color: #b0bac9; 
+    padding: 5px; 
+    border-radius: 8px; 
+    transition: all 0.15s; 
+    font-size: 16px;
+  }
   .del-btn:hover { background: var(--danger-bg); color: var(--danger); }
 
-  .add-row-btn { width: 100%; padding: 10px; margin-top: 10px; background: none; border: 1.5px dashed var(--border); border-radius: var(--radius); cursor: pointer; font-family: 'Cairo', sans-serif; font-size: 13px; color: var(--text-muted); }
+  .add-row-btn { 
+    width: 100%; 
+    padding: 12px; 
+    margin-top: 10px; 
+    background: none; 
+    border: 1.5px dashed var(--border); 
+    border-radius: var(--radius); 
+    cursor: pointer; 
+    font-family: 'Cairo', sans-serif; 
+    font-size: 13px; 
+    color: var(--text-muted); 
+    transition: all 0.2s;
+  }
   .add-row-btn:hover { border-color: var(--primary-light); color: var(--primary-light); background: #f0f5ff; }
 
-  .bulk-add-panel { background: var(--surface2); border-radius: var(--radius); padding: 15px; margin-bottom: 20px; display: flex; gap: 10px; align-items: flex-start; flex-wrap: wrap; }
-  .bulk-add-panel textarea { flex: 1; padding: 10px; border: 1.5px solid var(--border); border-radius: var(--radius); font-family: 'Cairo', sans-serif; font-size: 13px; min-height: 80px; resize: vertical; }
-  .bulk-add-panel textarea:focus { outline: none; border-color: var(--primary-light); }
+  .table-footer { 
+    background: var(--surface2); 
+    padding: 12px 16px; 
+    display: flex; 
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;
+    gap: 8px;
+    border-top: 1px solid var(--border); 
+    font-size: 11px; 
+    color: var(--text-muted); 
+    text-align: center;
+  }
 
-  .table-footer { background: var(--surface2); padding: 12px 20px; display: flex; justify-content: space-between; border-top: 1px solid var(--border); font-size: 12.5px; color: var(--text-muted); flex-wrap: wrap; }
-
-  .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--primary); color: white; padding: 11px 22px; border-radius: var(--radius); font-size: 13px; opacity: 0; transition: 0.3s; pointer-events: none; z-index: 300; }
+  .toast { 
+    position: fixed; 
+    bottom: 1rem; 
+    left: 50%; 
+    transform: translateX(-50%) translateY(20px); 
+    background: var(--primary); 
+    color: white; 
+    padding: 10px 18px; 
+    border-radius: var(--radius); 
+    font-size: 12px; 
+    opacity: 0; 
+    transition: 0.3s; 
+    pointer-events: none; 
+    z-index: 300; 
+    max-width: 90%;
+    text-align: center;
+  }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-  @media print { header, .stats-bar, .controls, .table-footer, .add-row-btn, .bulk-add-panel, .del-btn { display: none !important; } }
-  @media (max-width: 640px) { main { padding: 1rem; } .header-inner { padding: 0 1rem; } .controls { flex-direction: column; } .search-box { max-width: 100%; } }
+  .loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  .loading-overlay.show { display: flex; }
+  .spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid var(--surface2);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  @media (min-width: 768px) {
+    .header-inner { padding: 0 2rem; }
+    .logo-text h1 { font-size: 18px; }
+    .btn { padding: 8px 18px; font-size: 13px; }
+    .stat { font-size: 13px; }
+    .stat strong { font-size: 18px; }
+    main { padding: 1.5rem; }
+    .controls { flex-direction: row; align-items: center; }
+    .search-box { max-width: 280px; }
+    .bulk-add-panel { flex-direction: row; align-items: flex-start; }
+    .bulk-add-panel textarea { min-height: 80px; }
+    .table-footer { flex-direction: row; justify-content: space-between; }
+  }
+
+  @media (min-width: 1024px) {
+    .search-box { max-width: 320px; }
+    table { min-width: 900px; }
+    thead th { padding: 14px 12px; font-size: 12px; }
+    tbody td { padding: 10px 12px; font-size: 13px; }
+  }
+
+  @media print { 
+    header, .stats-bar, .controls, .table-footer, .add-row-btn, .bulk-add-panel, .del-btn, .connection-status { display: none !important; } 
+  }
 </style>
 </head>
 <body>
@@ -139,7 +365,10 @@
   <div class="header-inner">
     <div class="logo">
       <div class="logo-icon">📖</div>
-      <div class="logo-text"><h1>برنامج متين 2</h1><span>حفظ تلقائي للأسماء</span></div>
+      <div class="logo-text">
+        <h1>برنامج متين 2</h1>
+        <span>نظام المقابلات والقبول - سحابي</span>
+      </div>
     </div>
     <div class="header-actions">
       <button class="btn btn-outline" onclick="window.print()">🖨️ طباعة</button>
@@ -160,6 +389,11 @@
 </div>
 
 <main>
+  <div class="connection-status" id="connectionStatus">
+    <span>🔌 جاري الاتصال بقاعدة البيانات...</span>
+    <span id="syncStatus">⏳</span>
+  </div>
+
   <div class="bulk-add-panel">
     <textarea id="bulk-names" placeholder="📝 أدخلي الأسماء هنا، كل اسم في سطر منفصل&#10;مثال:&#10;أسماء محمد أحمد&#10;نور علي حسن&#10;فاطمة محمود"></textarea>
     <button class="btn btn-success" onclick="addBulkNames()">➕ إضافة الكل</button>
@@ -192,26 +426,79 @@
 
   <div class="table-card">
     <div class="table-wrapper">
-      <table>
+      <table id="main-table">
         <thead>
-          <tr><th>#</th><th>اسم الطالبة</th><th>اليوم</th><th>الساعة</th><th>المقابلة</th><th>القبول</th><th></th></tr>
+          <tr>
+            <th>#</th>
+            <th>اسم الطالبة</th>
+            <th>اليوم</th>
+            <th>الساعة</th>
+            <th>المقابلة</th>
+            <th>القبول</th>
+            <th></th>
+          </tr>
         </thead>
-        <tbody id="tbody"></tbody>
-       </table>
+        <tbody id="tbody">
+          <tr><td colspan="7" style="text-align:center;">⏳ جاري التحميل من السحاب...</td></tr>
+        </tbody>
+      </table>
     </div>
     <button class="add-row-btn" onclick="addRow()">+ إضافة طالبة جديدة</button>
     <div class="table-footer">
-      <span id="footer-info">جاري التحميل...</span>
-      <span>💾 يتم الحفظ تلقائياً في المتصفح</span>
+      <span id="footer-info">متصل بـ Firebase Cloud</span>
+      <span>☁️ حفظ سحابي | متزامن مع جميع الأجهزة</span>
     </div>
   </div>
 </main>
 
 <div class="toast" id="toast"></div>
+<div class="loading-overlay" id="loadingOverlay"><div class="spinner"></div></div>
 
-<script>
-  const STORAGE_KEY = 'mateen_students_data';
+<script type="importmap">
+  {
+    "imports": {
+      "firebase/app": "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js",
+      "firebase/firestore": "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"
+    }
+  }
+</script>
+
+<script type="module">
+  import { initializeApp } from 'firebase/app';
+  import { 
+    getFirestore, 
+    collection, 
+    onSnapshot, 
+    addDoc, 
+    updateDoc, 
+    deleteDoc, 
+    doc,
+    query,
+    orderBy,
+    writeBatch
+  } from 'firebase/firestore';
+  
+  // Firebase Configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyBLQfHXY_lW1cA6AYlQdpHxh8f16P5uy2I",
+    authDomain: "mateen-table.firebaseapp.com",
+    projectId: "mateen-table",
+    storageBucket: "mateen-table.firebasestorage.app",
+    messagingSenderId: "487838797731",
+    appId: "1:487838797731:web:5684b1b82ba31fa08a1416"
+  };
+  
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const studentsCollection = collection(db, 'students');
+  
+  let students = [];
+  let isConnected = false;
+  
   const DAYS = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+  const HOURS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+  const AMPM = ['ص', 'م'];
   
   const DEFAULT_NAMES = [
     'سمية بنت باسم', 'سفانة بنت ماهر', 'رحمة أحمد توفيق', 'سهام بنت سرحان المطرفي',
@@ -222,29 +509,78 @@
     'فاطمة احمد المالكي', 'حنان الشهراني', 'شيماء نيازي'
   ];
 
-  let students = [];
-
-  function loadData() {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      students = JSON.parse(saved);
-    } else {
-      students = DEFAULT_NAMES.map(name => ({
-        id: Date.now() + Math.random() + name,
-        name: name,
-        day: '',
-        time: '',
-        interview: 'pending',
-        accepted: 'na'
-      }));
-      saveData();
-    }
-    renderTable();
-    updateStats();
+  function showLoading(show) {
+    const overlay = document.getElementById('loadingOverlay');
+    if (show) overlay.classList.add('show');
+    else overlay.classList.remove('show');
   }
 
-  function saveData() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(students));
+  function showToast(msg, isError = false) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.style.background = isError ? 'var(--danger)' : 'var(--primary)';
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  }
+
+  function updateConnectionStatus(connected) {
+    isConnected = connected;
+    const statusDiv = document.getElementById('connectionStatus');
+    if (connected) {
+      statusDiv.innerHTML = `<span>☁️ متصل بـ Firebase Cloud</span><span class="status-online">✅ متزامن</span>`;
+    } else {
+      statusDiv.innerHTML = `<span>⚠️ غير متصل بالإنترنت</span><span class="status-offline">⏳ في انتظار الاتصال...</span><button class="sync-btn" onclick="window.retryConnection()">🔄 إعادة المحاولة</button>`;
+    }
+  }
+
+  // Real-time listener from Firebase
+  onSnapshot(query(studentsCollection, orderBy('createdAt', 'asc')), (snapshot) => {
+    students = [];
+    snapshot.forEach(doc => {
+      students.push({
+        firebaseId: doc.id,
+        ...doc.data()
+      });
+    });
+    
+    if (students.length === 0) {
+      // Add default data if empty
+      addDefaultData();
+    } else {
+      filterTable();
+      updateStats();
+      updateConnectionStatus(true);
+    }
+  }, (error) => {
+    console.error("Firebase error:", error);
+    updateConnectionStatus(false);
+    showToast('⚠️ مشكلة في الاتصال بقاعدة البيانات', true);
+  });
+
+  async function addDefaultData() {
+    showLoading(true);
+    try {
+      const batch = writeBatch(db);
+      for (const name of DEFAULT_NAMES) {
+        const newDocRef = doc(studentsCollection);
+        batch.set(newDocRef, {
+          name: name,
+          day: '',
+          hour: '',
+          ampm: 'ص',
+          interview: 'pending',
+          accepted: 'na',
+          createdAt: new Date()
+        });
+      }
+      await batch.commit();
+      showToast('✅ تم تحميل البيانات الافتراضية');
+    } catch (error) {
+      console.error("Error adding default data:", error);
+      showToast('❌ خطأ في تحميل البيانات', true);
+    } finally {
+      showLoading(false);
+    }
   }
 
   function updateStats() {
@@ -256,46 +592,58 @@
     document.getElementById('stat-rejected').textContent = students.filter(s => s.accepted === 'rejected').length;
   }
 
-  function updateStudent(id, field, value) {
-    const student = students.find(s => s.id == id);
+  window.updateStudent = async function(id, field, value) {
+    const student = students.find(s => s.firebaseId === id);
     if (student) {
-      student[field] = value;
-      if (field === 'interview' && value === 'pending') {
-        student.accepted = 'na';
+      try {
+        await updateDoc(doc(db, 'students', id), { [field]: value });
+        let msg = '';
+        if (field === 'name') msg = '💾 تم حفظ الاسم في السحاب';
+        else if (field === 'day') msg = '📅 تم تحديث اليوم';
+        else if (field === 'hour') msg = '⏰ تم تحديث الساعة';
+        else if (field === 'ampm') msg = '☀️ تم تحديث الفترة';
+        else if (field === 'interview') msg = value === 'done' ? '✅ تم تسجيل المقابلة' : '⏳ تم إلغاء المقابلة';
+        else if (field === 'accepted') {
+          if (value === 'accepted') msg = '🎉 تم تسجيل القبول';
+          else if (value === 'rejected') msg = '❌ تم تسجيل عدم القبول';
+          else msg = '↩️ تم إعادة ضبط القبول';
+        }
+        showToast(msg);
+      } catch (error) {
+        showToast('❌ خطأ في الحفظ', true);
       }
-      saveData();
-      filterTable();
-      showToast(field === 'name' ? '💾 تم حفظ الاسم' : field === 'day' ? '📅 تم تحديث اليوم' : '⏰ تم تحديث الوقت');
     }
-  }
+  };
 
-  function deleteStudent(id) {
-    students = students.filter(s => s.id != id);
-    saveData();
-    filterTable();
-    showToast('🗑️ تم حذف الطالبة');
-  }
+  window.deleteStudent = async function(id) {
+    if (confirm('⚠️ هل أنت متأكدة من حذف هذه الطالبة؟')) {
+      try {
+        await deleteDoc(doc(db, 'students', id));
+        showToast('🗑️ تم حذف الطالبة من السحاب');
+      } catch (error) {
+        showToast('❌ خطأ في الحذف', true);
+      }
+    }
+  };
 
-  function addRow() {
-    const newStudent = {
-      id: Date.now() + Math.random(),
-      name: '',
-      day: '',
-      time: '',
-      interview: 'pending',
-      accepted: 'na'
-    };
-    students.push(newStudent);
-    saveData();
-    filterTable();
-    setTimeout(() => {
-      const inputs = document.querySelectorAll('tbody tr:last-child .name-cell input');
-      if (inputs.length) inputs[0].focus();
-    }, 80);
-    showToast('✅ تمت إضافة سطر جديد');
-  }
+  window.addRow = async function() {
+    try {
+      await addDoc(studentsCollection, {
+        name: '',
+        day: '',
+        hour: '',
+        ampm: 'ص',
+        interview: 'pending',
+        accepted: 'na',
+        createdAt: new Date()
+      });
+      showToast('✅ تمت إضافة طالبة جديدة');
+    } catch (error) {
+      showToast('❌ خطأ في الإضافة', true);
+    }
+  };
 
-  function addBulkNames() {
+  window.addBulkNames = async function() {
     const textarea = document.getElementById('bulk-names');
     const text = textarea.value;
     if (!text.trim()) {
@@ -303,39 +651,63 @@
       return;
     }
     const names = text.split('\n').filter(n => n.trim().length > 0);
-    let added = 0;
-    for (const name of names) {
-      students.push({
-        id: Date.now() + Math.random() + name,
-        name: name.trim(),
-        day: '',
-        time: '',
-        interview: 'pending',
-        accepted: 'na'
-      });
-      added++;
+    showLoading(true);
+    try {
+      const batch = writeBatch(db);
+      for (const name of names) {
+        const newDocRef = doc(studentsCollection);
+        batch.set(newDocRef, {
+          name: name.trim(),
+          day: '',
+          hour: '',
+          ampm: 'ص',
+          interview: 'pending',
+          accepted: 'na',
+          createdAt: new Date()
+        });
+      }
+      await batch.commit();
+      textarea.value = '';
+      showToast(`✅ تمت إضافة ${names.length} اسم جديد إلى السحاب`);
+    } catch (error) {
+      showToast('❌ خطأ في الإضافة', true);
+    } finally {
+      showLoading(false);
     }
-    saveData();
-    filterTable();
-    textarea.value = '';
-    showToast(`✅ تمت إضافة ${added} اسم جديد`);
-  }
+  };
 
-  function clearAllData() {
+  window.clearAllData = async function() {
     if (confirm('⚠️ هل أنت متأكدة من مسح جميع البيانات؟ لا يمكن التراجع.')) {
-      students = [];
-      saveData();
-      renderTable();
-      updateStats();
-      showToast('🗑️ تم مسح جميع البيانات');
+      showLoading(true);
+      try {
+        const batch = writeBatch(db);
+        students.forEach(student => {
+          const docRef = doc(db, 'students', student.firebaseId);
+          batch.delete(docRef);
+        });
+        await batch.commit();
+        showToast('🗑️ تم مسح جميع البيانات من السحاب');
+      } catch (error) {
+        showToast('❌ خطأ في المسح', true);
+      } finally {
+        showLoading(false);
+      }
     }
-  }
+  };
+
+  window.retryConnection = function() {
+    window.location.reload();
+  };
 
   function renderTable(filteredList) {
     const tbody = document.getElementById('tbody');
     const data = filteredList || students;
-    tbody.innerHTML = '';
+    if (data.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">📭 لا توجد بيانات. أضيفي طالبات جديدة</td></tr>';
+      return;
+    }
     
+    tbody.innerHTML = '';
     data.forEach((student, idx) => {
       const ivClass = student.interview === 'done' ? 'done' : 'pending';
       const ivText = student.interview === 'done' ? '✅ تمت' : '⏳ لم تُجرَ';
@@ -344,38 +716,47 @@
       if (student.accepted === 'accepted') { acClass = 'accepted'; acText = '✔️ مقبولة'; }
       else if (student.accepted === 'rejected') { acClass = 'rejected'; acText = '✖️ غير مقبولة'; }
       
-      const acDisabled = student.interview !== 'done' ? 'disabled style="opacity:0.5"' : '';
+      const acDisabled = student.interview !== 'done' ? 'disabled style="opacity:0.5;cursor:not-allowed;"' : '';
       
       const tr = document.createElement('tr');
+      tr.setAttribute('data-id', student.firebaseId);
       tr.innerHTML = `
         <td>${idx + 1}</td>
         <td class="name-td">
           <div class="name-cell">
-            <input type="text" value="${escapeHtml(student.name)}" placeholder="اكتبي اسم الطالبة..." id="name-${student.id}" onkeypress="if(event.key==='Enter'){updateStudent('${student.id}','name',this.value)}">
-            <button class="save-name-btn" onclick="updateStudent('${student.id}','name',document.getElementById('name-${student.id}').value)">💾</button>
+            <input type="text" value="${escapeHtml(student.name || '')}" placeholder="اكتبي اسم الطالبة..." id="name-${student.firebaseId}" onkeypress="if(event.key==='Enter'){updateStudent('${student.firebaseId}','name',this.value)}">
+            <button class="save-name-btn" onclick="updateStudent('${student.firebaseId}','name',document.getElementById('name-${student.firebaseId}').value)">💾</button>
           </div>
         </td>
         <td>
-          <select class="day-select" onchange="updateStudent('${student.id}','day',this.value)">
+          <select class="day-select" onchange="updateStudent('${student.firebaseId}','day',this.value)">
             <option value="">-- اليوم --</option>
             ${DAYS.map(d => `<option value="${d}" ${student.day === d ? 'selected' : ''}>${d}</option>`).join('')}
           </select>
         </td>
         <td>
-          <input type="text" class="time-input" value="${escapeHtml(student.time)}" placeholder="10:00 ص" onchange="updateStudent('${student.id}','time',this.value)">
+          <div class="time-wrapper">
+            <select class="time-hour" onchange="updateStudent('${student.firebaseId}','hour',this.value)">
+              <option value="">س</option>
+              ${HOURS.map(h => `<option value="${h}" ${student.hour === h ? 'selected' : ''}>${h}</option>`).join('')}
+            </select>
+            <select class="time-ampm" onchange="updateStudent('${student.firebaseId}','ampm',this.value)">
+              ${AMPM.map(a => `<option value="${a}" ${student.ampm === a ? 'selected' : ''}>${a === 'ص' ? 'صباحاً' : 'مساءً'}</option>`).join('')}
+            </select>
+          </div>
         </td>
         <td>
-          <button class="toggle-btn ${ivClass}" onclick="updateStudent('${student.id}','interview', student.interview === 'pending' ? 'done' : 'pending')">
+          <button class="toggle-btn ${ivClass}" onclick="updateStudent('${student.firebaseId}','interview', student.interview === 'pending' ? 'done' : 'pending')">
             ${ivText}
           </button>
         </td>
         <td>
-          <button class="toggle-btn ${acClass}" onclick="if(student.interview==='done'){ const order=['na','accepted','rejected']; const cur=order.indexOf(student.accepted); updateStudent('${student.id}','accepted',order[(cur+1)%3]); }" ${acDisabled}>
+          <button class="toggle-btn ${acClass}" onclick="if(student.interview==='done'){ const order=['na','accepted','rejected']; const cur=order.indexOf('${student.accepted}'); updateStudent('${student.firebaseId}','accepted',order[(cur+1)%3]); }" ${acDisabled}>
             ${acText}
           </button>
         </td>
         <td>
-          <button class="del-btn" onclick="deleteStudent('${student.id}')" title="حذف">🗑️</button>
+          <button class="del-btn" onclick="deleteStudent('${student.firebaseId}')" title="حذف">🗑️</button>
         </td>
       `;
       tbody.appendChild(tr);
@@ -384,7 +765,7 @@
     document.getElementById('footer-info').textContent = filteredList ? `تعرض ${data.length} من ${students.length} سجل` : `إجمالي السجلات: ${students.length}`;
   }
 
-  function filterTable() {
+  window.filterTable = function() {
     const search = document.getElementById('search-input').value.trim().toLowerCase();
     const dayFilter = document.getElementById('day-filter').value;
     const interviewFilter = document.getElementById('interview-filter').value;
@@ -398,44 +779,31 @@
       return matchSearch && matchDay && matchInterview && matchAccepted;
     });
     renderTable(filtered);
-  }
+  };
 
-  function exportCSV() {
+  window.exportCSV = function() {
     const headers = ['الرقم', 'اسم الطالبة', 'اليوم', 'الساعة', 'تمت المقابلة', 'القبول'];
     const rows = [headers.join(',')];
     students.forEach((s, i) => {
+      const timeStr = s.hour ? `${s.hour} ${s.ampm === 'ص' ? 'صباحاً' : 'مساءً'}` : '';
       const ivLabel = s.interview === 'done' ? 'تمت' : 'لم تُجرَ';
       const acLabel = s.accepted === 'accepted' ? 'مقبولة' : s.accepted === 'rejected' ? 'غير مقبولة' : 'لم يُحدَّد';
-      rows.push([i+1, `"${s.name || ''}"`, s.day || '', s.time || '', ivLabel, acLabel].join(','));
+      rows.push([i+1, `"${s.name || ''}"`, s.day || '', timeStr, ivLabel, acLabel].join(','));
     });
     const blob = new Blob(['\uFEFF' + rows.join('\n')], {type: 'text/csv;charset=utf-8'});
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url; a.download = 'جدول_متين.csv'; a.click();
+    a.href = url; a.download = 'mateen_firebase.csv'; a.click();
     URL.revokeObjectURL(url);
-    showToast('⬇️ تم تصدير الجدول');
-  }
+    showToast('📥 تم تصدير الجدول');
+  };
 
   function escapeHtml(str) { return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-  
-  let toastTimer;
-  function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => t.classList.remove('show'), 2000);
-  }
 
-  window.updateStudent = updateStudent;
-  window.deleteStudent = deleteStudent;
-  window.addRow = addRow;
-  window.addBulkNames = addBulkNames;
-  window.clearAllData = clearAllData;
+  // Make functions global
+  window.retryConnection = retryConnection;
   window.filterTable = filterTable;
   window.exportCSV = exportCSV;
-
-  loadData();
 </script>
 </body>
 </html>
