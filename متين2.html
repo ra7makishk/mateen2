@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title> 2جدول المقابلات والقبول ببرنامج متين </title>
+<title>جدول المقابلات والقبول - برنامج متين</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -31,56 +31,6 @@
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  <script type="module">
-
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-import {
-  getFirestore,
-  collection,
-  getDocs,
-  addDoc,
-  updateDoc,
-  deleteDoc,
-  doc,
-  onSnapshot
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-const firebaseConfig = {
-
-  apiKey: "AIzaSyBLQfHXY_lW1cA6AYlQdpHxh8f16P5uy2I",
-
-  authDomain: "mateen-table.firebaseapp.com",
-
-  projectId: "mateen-table",
-
-  storageBucket: "mateen-table.firebasestorage.app",
-
-  messagingSenderId: "487838797731",
-
-  appId: "1:487838797731:web:5684b1b82ba31fa08a1416"
-};
-
-const app = initializeApp(firebaseConfig);
-
-const db = getFirestore(app);
-
-window.db = db;
-
-window.fb = {
-  collection,
-  getDocs,
-  addDoc,
-  updateDoc,
-  deleteDoc,
-  doc,
-  onSnapshot
-};
-
-</script>
 
   body {
     font-family: 'Cairo', sans-serif;
@@ -137,6 +87,8 @@ window.fb = {
   .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.6); }
   .btn-danger { background: var(--danger-bg); color: var(--danger); border: 1px solid #f5c6c6; }
   .btn-danger:hover { background: #f9dddd; }
+  .btn-success { background: var(--success-bg); color: var(--success); border: 1px solid #a7e3c8; }
+  .btn-success:hover { background: #d4f5e7; }
 
   .stats-bar { background: var(--primary-light); padding: 12px 2rem; }
   .stats-inner {
@@ -213,15 +165,42 @@ window.fb = {
 
   .row-num { text-align: center; font-size: 12px; color: var(--text-muted); font-weight: 500; }
 
+  .name-cell {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
   .name-cell input {
-    width: 100%; background: transparent; border: none;
-    font-family: 'Cairo', sans-serif; font-size: 13.5px; color: var(--text); font-weight: 500;
-    padding: 4px 6px; border-radius: 6px; transition: background 0.15s, border 0.15s;
+    flex: 1;
+    background: transparent;
+    border: none;
+    font-family: 'Cairo', sans-serif;
+    font-size: 13.5px;
+    color: var(--text);
+    font-weight: 500;
+    padding: 4px 6px;
+    border-radius: 6px;
+    transition: background 0.15s, border 0.15s;
     border: 1.5px solid transparent;
   }
   .name-cell input:hover { background: var(--surface2); }
   .name-cell input:focus { outline: none; background: var(--surface); border-color: var(--primary-light); box-shadow: 0 0 0 3px rgba(37,87,167,0.08); }
   .name-cell input::placeholder { color: #b0bac9; font-weight: 400; }
+  .save-name-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--success);
+    font-size: 14px;
+    padding: 4px;
+    border-radius: 6px;
+    opacity: 0.6;
+    transition: all 0.15s;
+  }
+  .save-name-btn:hover {
+    opacity: 1;
+    background: var(--success-bg);
+  }
 
   .day-select, .time-input {
     width: 100%; padding: 6px 8px;
@@ -232,7 +211,6 @@ window.fb = {
   .day-select:hover, .time-input:hover { background: var(--surface2); }
   .day-select:focus, .time-input:focus { outline: none; border-color: var(--primary-light); background: var(--surface); box-shadow: 0 0 0 3px rgba(37,87,167,0.08); }
 
-  /* Toggle buttons for interview / accepted */
   .toggle-btn {
     display: inline-flex; align-items: center; justify-content: center; gap: 5px;
     padding: 5px 12px; border-radius: 20px; border: none; cursor: pointer;
@@ -294,6 +272,31 @@ window.fb = {
   }
   .add-row-btn:hover { border-color: var(--primary-light); color: var(--primary-light); background: #f0f5ff; }
 
+  .bulk-add-panel {
+    background: var(--surface2);
+    border-radius: var(--radius);
+    padding: 15px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .bulk-add-panel textarea {
+    flex: 1;
+    padding: 10px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    font-family: 'Cairo', sans-serif;
+    font-size: 13px;
+    resize: vertical;
+    min-height: 80px;
+  }
+  .bulk-add-panel textarea:focus {
+    outline: none;
+    border-color: var(--primary-light);
+  }
+
   .modal-overlay {
     display: none; position: fixed; inset: 0;
     background: rgba(26,58,92,0.45); z-index: 200;
@@ -324,7 +327,7 @@ window.fb = {
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
   @media print {
-    header, .stats-bar, .controls, .table-footer, .del-btn, .add-row-btn { display: none !important; }
+    header, .stats-bar, .controls, .table-footer, .add-row-btn, .bulk-add-panel { display: none !important; }
     main { padding: 0; }
     .table-card { box-shadow: none; border: 1px solid #ccc; }
     input, select { border: none !important; }
@@ -348,8 +351,8 @@ window.fb = {
     <div class="logo">
       <div class="logo-icon">📖</div>
       <div class="logo-text">
-        <h1>برنامج متين 2 </h1>
-        <span>  التسجيل والقبول </span>
+        <h1>برنامج متين 2</h1>
+        <span>التسجيل والقبول - حفظ تلقائي للأسماء</span>
       </div>
     </div>
     <div class="header-actions">
@@ -371,6 +374,12 @@ window.fb = {
 </div>
 
 <main>
+  <!-- لوحة إضافة أسماء متعددة دفعة واحدة -->
+  <div class="bulk-add-panel">
+    <textarea id="bulk-names" placeholder="أدخلي الأسماء هنا، كل اسم في سطر منفصل&#10;مثال:&#10;أسماء محمد أحمد&#10;نور علي حسن&#10;فاطمة محمود"></textarea>
+    <button class="btn btn-success" onclick="addBulkNames()" style="white-space: nowrap;">➕ إضافة الكل</button>
+  </div>
+
   <div class="controls">
     <div class="search-box">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -437,330 +446,294 @@ window.fb = {
 
 <div class="toast" id="toast"></div>
 
-<script>
-const DAYS = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
-const STORAGE_KEY = 'student_interview_v2';
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import {
+    getFirestore,
+    collection,
+    getDocs,
+    addDoc,
+    updateDoc,
+    deleteDoc,
+    doc,
+    onSnapshot
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-const INITIAL_NAMES = [
-  'سمية بنت باسم','سفانة بنت ماهر',' رحمة أحمد توفيق','سهام بنت سِرحان بن هليل المطرفي',
-  'فاطمة بنت محمد بن إبراهيم توفيق','أمينة أحمد يوسف','أميرة بشير سلطان خلف',
-  'عبير بشير سلطان خلف','زينب راجي لغالي','هبة سليك','حصة بنت لافي الثبيتي',
-  'روضة موسى صالح','عائشة أحمد أمان','آسيا بنت صباح بن علي','شروق علي الشهري',
-  'عفاف محمد أحمد عبدالرحمن','ناهد عبدالعزيز عبدالفتاح','هاجر نجار حامد', 
-  'حياة عبدالواسع عبدالقادر جابر','فاطمة احمد المالكي','حنان الشهراني  ','	شيماء نيازي  ' 
-];
-
-// interview: 'pending' | 'done'
-// accepted:  'na' | 'accepted' | 'rejected'
-let rows = [];
-
-async function loadData() {
-  const snap = await fb.getDocs(fb.collection(db, 'students'));
-
-  rows = [];
-
-  snap.forEach((d) => {
-    rows.push({
-      firebaseId: d.id,
-      ...d.data()
-    });
-  });
-
-  if (rows.length === 0) {
-
-    for (const n of INITIAL_NAMES) {
-
-      const obj = {
-        name: n,
-        day: '',
-        time: '',
-        interview: 'pending',
-        accepted: 'na'
-      };
-
-      const ref = await fb.addDoc(
-        fb.collection(db, 'students'),
-        obj
-      );
-
-      rows.push({
-        firebaseId: ref.id,
-        ...obj
-      });
-    }
-  }
-
-  renderTable();
-  updateStats();
-}
-
-function saveData() {
-  updateLastUpdated();
-  updateStats();
-}
-
-function genId() {
-  return Date.now().toString(36) + Math.random().toString(36).slice(2);
-}
-
-function updateLastUpdated() {
-  const now = new Date();
-  document.getElementById('last-updated').textContent =
-    now.toLocaleTimeString('ar-SA', {hour:'2-digit', minute:'2-digit'});
-}
-
-function updateStats() {
-  const named = rows.filter(r => r.name.trim());
-  document.getElementById('stat-total').textContent = named.length;
-  document.getElementById('stat-interviewed').textContent = named.filter(r => r.interview === 'done').length;
-  document.getElementById('stat-not-interviewed').textContent = named.filter(r => r.interview === 'pending').length;
-  document.getElementById('stat-accepted').textContent = named.filter(r => r.accepted === 'accepted').length;
-  document.getElementById('stat-rejected').textContent = named.filter(r => r.accepted === 'rejected').length;
-}
-
-function interviewLabel(val) {
-  return val === 'done' ? { cls: 'done', icon: '✅', text: 'تمت' } : { cls: 'pending', icon: '⏳', text: 'لم تُجرَ' };
-}
-
-function acceptedLabel(val) {
-  if (val === 'accepted') return { cls: 'accepted', icon: '✔️', text: 'مقبولة' };
-  if (val === 'rejected') return { cls: 'rejected', icon: '✖️', text: 'غير مقبولة' };
-  return { cls: 'na', icon: '—', text: 'لم يُحدَّد' };
-}
-
-function cycleInterview(idx) {
-  rows[idx].interview = rows[idx].interview === 'pending' ? 'done' : 'pending';
-  // if interview not done, reset accepted
-  if (rows[idx].interview === 'pending') rows[idx].accepted = 'na';
-  saveData();
-  filterTable();
-  showToast(rows[idx].interview === 'done' ? '✅ تم تسجيل إجراء المقابلة' : '⏳ تم إلغاء تسجيل المقابلة');
-}
-
-function cycleAccepted(idx) {
-  const order = ['na', 'accepted', 'rejected'];
-  const cur = order.indexOf(rows[idx].accepted);
-  rows[idx].accepted = order[(cur + 1) % order.length];
-  saveData();
-  filterTable();
-  const msg = rows[idx].accepted === 'accepted' ? '🎉 تم تسجيل القبول' :
-              rows[idx].accepted === 'rejected' ? '❌ تم تسجيل عدم القبول' : '↩️ تم إعادة ضبط حالة القبول';
-  showToast(msg);
-}
-
-function renderTable(filtered) {
-  const tbody = document.getElementById('tbody');
-  const data = filtered !== undefined ? filtered : rows;
-  tbody.innerHTML = '';
-
-  data.forEach((row, visIdx) => {
-    const realIdx = rows.indexOf(row);
-    const tr = document.createElement('tr');
-    tr.dataset.id = row.id;
-
-    const iv = interviewLabel(row.interview);
-    const ac = acceptedLabel(row.accepted);
-
-    // disable accepted if interview not done
-    const acDisabled = row.interview !== 'done' ? 'style="opacity:0.35;pointer-events:none;cursor:default;"' : '';
-
-    tr.innerHTML = `
-      <td class="row-num">${visIdx + 1}</td>
-      <td class="name-td">
-        <div class="name-cell">
-          <input type="text" value="${escHtml(row.name)}" placeholder="اكتبي اسم الطالبة..." data-idx="${realIdx}" onchange="updateRow(${realIdx},'name',this.value)">
-        </div>
-      </td>
-      <td>
-        <select class="day-select" data-idx="${realIdx}" onchange="updateRow(${realIdx},'day',this.value)">
-          <option value="">-- اليوم --</option>
-          ${DAYS.map(d => `<option value="${d}" ${row.day===d?'selected':''}>${d}</option>`).join('')}
-        </select>
-      </td>
-      <td>
-        <input type="text" class="time-input" value="${escHtml(row.time)}" placeholder="10:00 ص" data-idx="${realIdx}" onchange="updateRow(${realIdx},'time',this.value)">
-      </td>
-      <td>
-        <button class="toggle-btn ${iv.cls}" onclick="cycleInterview(${realIdx})" title="اضغطي للتغيير">
-          ${iv.icon} ${iv.text}
-        </button>
-      </td>
-      <td>
-        <button class="toggle-btn ${ac.cls}" onclick="cycleAccepted(${realIdx})" ${acDisabled} title="${row.interview !== 'done' ? 'أجري المقابلة أولاً' : 'اضغطي للتغيير'}">
-          ${ac.icon} ${ac.text}
-        </button>
-      </td>
-      <td>
-        <button class="del-btn" onclick="deleteRow('${row.id}')" title="حذف الصف">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/>
-          </svg>
-        </button>
-      </td>
-    `;
-    tbody.appendChild(tr);
-  });
-
-  const footerInfo = document.getElementById('footer-info');
-  footerInfo.textContent = filtered !== undefined
-    ? `تعرض ${data.length} من ${rows.length} سجل`
-    : `إجمالي السجلات: ${rows.length} | اضغطي على أي خانة للتعديل`;
-}
-
-async function updateRow(idx, field, value) {
-
-  rows[idx][field] = value;
-
-  await fb.updateDoc(
-    fb.doc(db, 'students', rows[idx].firebaseId),
-    {
-      [field]: value
-    }
-  );
-
-  saveData();
-}
-
-async function addRow() {
-
-  const obj = {
-    name: '',
-    day: '',
-    time: '',
-    interview: 'pending',
-    accepted: 'na'
+  const firebaseConfig = {
+    apiKey: "AIzaSyBLQfHXY_lW1cA6AYlQdpHxh8f16P5uy2I",
+    authDomain: "mateen-table.firebaseapp.com",
+    projectId: "mateen-table",
+    storageBucket: "mateen-table.firebasestorage.app",
+    messagingSenderId: "487838797731",
+    appId: "1:487838797731:web:5684b1b82ba31fa08a1416"
   };
 
-  const ref = await fb.addDoc(
-    fb.collection(db, 'students'),
-    obj
-  );
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
 
-  rows.push({
-    firebaseId: ref.id,
-    ...obj
-  });
+  const DAYS = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+  const INITIAL_NAMES = [
+    'سمية بنت باسم','سفانة بنت ماهر','رحمة أحمد توفيق','سهام بنت سرحان بن هليل المطرفي',
+    'فاطمة بنت محمد بن إبراهيم توفيق','أمينة أحمد يوسف','أميرة بشير سلطان خلف',
+    'عبير بشير سلطان خلف','زينب راجي لغالي','هبة سليك','حصة بنت لافي الثبيتي',
+    'روضة موسى صالح','عائشة أحمد أمان','آسيا بنت صباح بن علي','شروق علي الشهري',
+    'عفاف محمد أحمد عبدالرحمن','ناهد عبدالعزيز عبدالفتاح','هاجر نجار حامد', 
+    'حياة عبدالواسع عبدالقادر جابر','فاطمة احمد المالكي','حنان الشهراني','شيماء نيازي'
+  ];
 
-  saveData();
-  filterTable();
+  let rows = [];
 
-  setTimeout(() => {
-    const inputs = document.querySelectorAll('tbody tr:last-child .name-cell input');
-
-    if (inputs.length) {
-      inputs[0].focus();
-    }
-  }, 80);
-
-  showToast('✅ تمت إضافة سطر جديد');
-}
-
-async function deleteRow(id) {
-
-  const row = rows.find(
-    r => r.id === id || r.firebaseId === id
-  );
-
-  if (row?.firebaseId) {
-
-    await fb.deleteDoc(
-      fb.doc(db, 'students', row.firebaseId)
-    );
-  }
-
-  rows = rows.filter(
-    r => r.firebaseId !== id && r.id !== id
-  );
-
-  saveData();
-  filterTable();
-
-  showToast('🗑️ تم حذف الصف');
-}
-
-function filterTable() {
-  const search = document.getElementById('search-input').value.trim().toLowerCase();
-  const dayF = document.getElementById('day-filter').value;
-  const ivF = document.getElementById('interview-filter').value;
-  const acF = document.getElementById('accepted-filter').value;
-
-  let filtered = rows.filter(r => {
-    const nameMatch = !search || r.name.toLowerCase().includes(search);
-    const dayMatch = !dayF || r.day === dayF;
-    const ivMatch = !ivF || r.interview === ivF;
-    const acMatch = !acF || r.accepted === acF;
-    return nameMatch && dayMatch && ivMatch && acMatch;
-  });
-
-  renderTable(filtered);
-}
-
-function confirmClearAll() { document.getElementById('clear-modal').classList.add('open'); }
-function closeModal() { document.getElementById('clear-modal').classList.remove('open'); }
-
-function clearAllSchedules() {
-  rows = rows.map(r => ({...r, day: '', time: '', interview: 'pending', accepted: 'na'}));
-  saveData();
-  filterTable();
-  closeModal();
-  showToast('🗑️ تم مسح جميع البيانات');
-}
-
-function exportCSV() {
-  const headers = ['الرقم','اسم الطالبة','اليوم','الساعة','تمت المقابلة','القبول'];
-  const csvRows = [headers.join(',')];
-  rows.forEach((r, i) => {
-    const ivLabel = r.interview === 'done' ? 'تمت' : 'لم تُجرَ';
-    const acLabel = r.accepted === 'accepted' ? 'مقبولة' : r.accepted === 'rejected' ? 'غير مقبولة' : 'لم يُحدَّد';
-    csvRows.push([i+1, `"${r.name}"`, r.day, r.time, ivLabel, acLabel].join(','));
-  });
-  const blob = new Blob(['\uFEFF' + csvRows.join('\n')], {type:'text/csv;charset=utf-8;'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = 'جدول_متين_المقابلات.csv'; a.click();
-  URL.revokeObjectURL(url);
-  showToast('⬇️ تم تصدير الجدول بنجاح');
-}
-
-function escHtml(str) {
-  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-let toastTimer;
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
-}
-
-document.getElementById('clear-modal').addEventListener('click', function(e) {
-  if (e.target === this) closeModal();
-});
-
-loadData();
-
-fb.onSnapshot(
-  fb.collection(db, 'students'),
-  (snapshot) => {
-
+  async function loadData() {
+    const snap = await getDocs(collection(db, 'students'));
     rows = [];
-
-    snapshot.forEach((d) => {
-
+    snap.forEach((d) => {
       rows.push({
         firebaseId: d.id,
         ...d.data()
       });
-
     });
 
+    if (rows.length === 0) {
+      for (const n of INITIAL_NAMES) {
+        const obj = {
+          name: n.trim(),
+          day: '',
+          time: '',
+          interview: 'pending',
+          accepted: 'na'
+        };
+        const ref = await addDoc(collection(db, 'students'), obj);
+        rows.push({ firebaseId: ref.id, ...obj });
+      }
+    }
+    renderTable();
+    updateStats();
+  }
+
+  function updateLastUpdated() {
+    const now = new Date();
+    document.getElementById('last-updated').textContent = now.toLocaleTimeString('ar-SA', {hour:'2-digit', minute:'2-digit'});
+  }
+
+  function updateStats() {
+    const named = rows.filter(r => r.name && r.name.trim());
+    document.getElementById('stat-total').textContent = named.length;
+    document.getElementById('stat-interviewed').textContent = named.filter(r => r.interview === 'done').length;
+    document.getElementById('stat-not-interviewed').textContent = named.filter(r => r.interview === 'pending').length;
+    document.getElementById('stat-accepted').textContent = named.filter(r => r.accepted === 'accepted').length;
+    document.getElementById('stat-rejected').textContent = named.filter(r => r.accepted === 'rejected').length;
+  }
+
+  function interviewLabel(val) {
+    return val === 'done' ? { cls: 'done', icon: '✅', text: 'تمت' } : { cls: 'pending', icon: '⏳', text: 'لم تُجرَ' };
+  }
+
+  function acceptedLabel(val) {
+    if (val === 'accepted') return { cls: 'accepted', icon: '✔️', text: 'مقبولة' };
+    if (val === 'rejected') return { cls: 'rejected', icon: '✖️', text: 'غير مقبولة' };
+    return { cls: 'na', icon: '—', text: 'لم يُحدَّد' };
+  }
+
+  window.cycleInterview = function(idx) {
+    rows[idx].interview = rows[idx].interview === 'pending' ? 'done' : 'pending';
+    if (rows[idx].interview === 'pending') rows[idx].accepted = 'na';
+    updateDoc(doc(db, 'students', rows[idx].firebaseId), { interview: rows[idx].interview, accepted: rows[idx].accepted });
+    filterTable();
+    showToast(rows[idx].interview === 'done' ? '✅ تم تسجيل إجراء المقابلة' : '⏳ تم إلغاء تسجيل المقابلة');
+  }
+
+  window.cycleAccepted = function(idx) {
+    const order = ['na', 'accepted', 'rejected'];
+    const cur = order.indexOf(rows[idx].accepted);
+    rows[idx].accepted = order[(cur + 1) % order.length];
+    updateDoc(doc(db, 'students', rows[idx].firebaseId), { accepted: rows[idx].accepted });
+    filterTable();
+    const msg = rows[idx].accepted === 'accepted' ? '🎉 تم تسجيل القبول' :
+                rows[idx].accepted === 'rejected' ? '❌ تم تسجيل عدم القبول' : '↩️ تم إعادة ضبط حالة القبول';
+    showToast(msg);
+  }
+
+  window.updateName = async function(idx, value) {
+    if (!value.trim()) {
+      showToast('⚠️ الرجاء إدخال اسم صحيح');
+      return false;
+    }
+    rows[idx].name = value.trim();
+    await updateDoc(doc(db, 'students', rows[idx].firebaseId), { name: rows[idx].name });
+    filterTable();
+    showToast('💾 تم حفظ الاسم: ' + rows[idx].name);
+    return true;
+  }
+
+  function renderTable(filtered) {
+    const tbody = document.getElementById('tbody');
+    const data = filtered !== undefined ? filtered : rows;
+    tbody.innerHTML = '';
+    data.forEach((row, visIdx) => {
+      const realIdx = rows.findIndex(r => r.firebaseId === row.firebaseId);
+      const tr = document.createElement('tr');
+      const iv = interviewLabel(row.interview);
+      const ac = acceptedLabel(row.accepted);
+      const acDisabled = row.interview !== 'done' ? 'style="opacity:0.35;pointer-events:none;cursor:default;"' : '';
+      tr.innerHTML = `
+        <td class="row-num">${visIdx + 1}</td>
+        <td class="name-td">
+          <div class="name-cell">
+            <input type="text" value="${escapeHtml(row.name || '')}" placeholder="اكتبي اسم الطالبة..." id="name-input-${realIdx}" onkeypress="if(event.key==='Enter'){updateName(${realIdx}, this.value)}">
+            <button class="save-name-btn" onclick="updateName(${realIdx}, document.getElementById('name-input-${realIdx}').value)" title="حفظ الاسم">💾</button>
+          </div>
+        </td>
+        <td>
+          <select class="day-select" data-idx="${realIdx}" onchange="updateRow(${realIdx},'day',this.value)">
+            <option value="">-- اليوم --</option>
+            ${DAYS.map(d => `<option value="${d}" ${row.day===d?'selected':''}>${d}</option>`).join('')}
+          </select>
+        </td>
+        <td>
+          <input type="text" class="time-input" value="${escapeHtml(row.time || '')}" placeholder="10:00 ص" data-idx="${realIdx}" onchange="updateRow(${realIdx},'time',this.value)">
+        </td>
+        <td>
+          <button class="toggle-btn ${iv.cls}" onclick="cycleInterview(${realIdx})" title="اضغطي للتغيير">
+            ${iv.icon} ${iv.text}
+          </button>
+        </td>
+        <td>
+          <button class="toggle-btn ${ac.cls}" onclick="cycleAccepted(${realIdx})" ${acDisabled} title="${row.interview !== 'done' ? 'أجري المقابلة أولاً' : 'اضغطي للتغيير'}">
+            ${ac.icon} ${ac.text}
+          </button>
+        </td>
+        <td>
+          <button class="del-btn" onclick="deleteRow('${row.firebaseId}')" title="حذف الصف">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/>
+            </svg>
+          </button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+    const footerInfo = document.getElementById('footer-info');
+    footerInfo.textContent = filtered !== undefined ? `تعرض ${data.length} من ${rows.length} سجل` : `إجمالي السجلات: ${rows.length} | اضغطي على أي خانة للتعديل`;
+  }
+
+  window.updateRow = async function(idx, field, value) {
+    rows[idx][field] = value;
+    await updateDoc(doc(db, 'students', rows[idx].firebaseId), { [field]: value });
+    showToast(field === 'day' ? '📅 تم تحديث اليوم' : '⏰ تم تحديث الوقت');
+  }
+
+  window.addRow = async function() {
+    const obj = { name: '', day: '', time: '', interview: 'pending', accepted: 'na' };
+    const ref = await addDoc(collection(db, 'students'), obj);
+    rows.push({ firebaseId: ref.id, ...obj });
+    filterTable();
+    setTimeout(() => {
+      const inputs = document.querySelectorAll('tbody tr:last-child .name-cell input');
+      if (inputs.length) inputs[0].focus();
+    }, 80);
+    showToast('✅ تمت إضافة سطر جديد');
+  }
+
+  window.addBulkNames = async function() {
+    const textarea = document.getElementById('bulk-names');
+    const namesText = textarea.value;
+    if (!namesText.trim()) {
+      showToast('⚠️ الرجاء إدخال الأسماء أولاً');
+      return;
+    }
+    const names = namesText.split('\n').filter(n => n.trim().length > 0);
+    let added = 0;
+    for (const name of names) {
+      const obj = { name: name.trim(), day: '', time: '', interview: 'pending', accepted: 'na' };
+      const ref = await addDoc(collection(db, 'students'), obj);
+      rows.push({ firebaseId: ref.id, ...obj });
+      added++;
+    }
+    textarea.value = '';
+    filterTable();
+    showToast(`✅ تمت إضافة ${added} اسم جديد`);
+  }
+
+  window.deleteRow = async function(id) {
+    const row = rows.find(r => r.firebaseId === id);
+    if (row?.firebaseId) await deleteDoc(doc(db, 'students', row.firebaseId));
+    rows = rows.filter(r => r.firebaseId !== id);
+    filterTable();
+    showToast('🗑️ تم حذف الصف');
+  }
+
+  window.filterTable = function() {
+    const search = document.getElementById('search-input').value.trim().toLowerCase();
+    const dayF = document.getElementById('day-filter').value;
+    const ivF = document.getElementById('interview-filter').value;
+    const acF = document.getElementById('accepted-filter').value;
+    let filtered = rows.filter(r => {
+      const nameMatch = !search || (r.name || '').toLowerCase().includes(search);
+      const dayMatch = !dayF || r.day === dayF;
+      const ivMatch = !ivF || r.interview === ivF;
+      const acMatch = !acF || r.accepted === acF;
+      return nameMatch && dayMatch && ivMatch && acMatch;
+    });
+    renderTable(filtered);
+  }
+
+  window.confirmClearAll = function() { document.getElementById('clear-modal').classList.add('open'); }
+  window.closeModal = function() { document.getElementById('clear-modal').classList.remove('open'); }
+
+  window.clearAllSchedules = function() {
+    rows.forEach(async (r) => {
+      r.day = ''; r.time = ''; r.interview = 'pending'; r.accepted = 'na';
+      await updateDoc(doc(db, 'students', r.firebaseId), { day: '', time: '', interview: 'pending', accepted: 'na' });
+    });
+    filterTable();
+    closeModal();
+    showToast('🗑️ تم مسح جميع البيانات');
+  }
+
+  window.exportCSV = function() {
+    const headers = ['الرقم','اسم الطالبة','اليوم','الساعة','تمت المقابلة','القبول'];
+    const csvRows = [headers.join(',')];
+    rows.forEach((r, i) => {
+      const ivLabel = r.interview === 'done' ? 'تمت' : 'لم تُجرَ';
+      const acLabel = r.accepted === 'accepted' ? 'مقبولة' : r.accepted === 'rejected' ? 'غير مقبولة' : 'لم يُحدَّد';
+      csvRows.push([i+1, `"${r.name || ''}"`, r.day || '', r.time || '', ivLabel, acLabel].join(','));
+    });
+    const blob = new Blob(['\uFEFF' + csvRows.join('\n')], {type:'text/csv;charset=utf-8;'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'جدول_متين_المقابلات.csv'; a.click();
+    URL.revokeObjectURL(url);
+    showToast('⬇️ تم تصدير الجدول بنجاح');
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  let toastTimer;
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+  }
+
+  document.getElementById('clear-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  // Real-time listener
+  onSnapshot(collection(db, 'students'), (snapshot) => {
+    rows = [];
+    snapshot.forEach((d) => {
+      rows.push({ firebaseId: d.id, ...d.data() });
+    });
     renderTable();
     updateStats();
     updateLastUpdated();
-  }
-);
+  });
 </script>
 </body>
 </html>
