@@ -79,8 +79,6 @@
   .btn-danger:hover { background: #f9dddd; }
   .btn-success { background: var(--success-bg); color: var(--success); border: 1px solid #a7e3c8; }
   .btn-success:hover { background: #d4f5e7; }
-  .btn-warning { background: var(--warning-bg); color: var(--warning); border: 1px solid #fde68a; }
-  .btn-warning:hover { background: #fef3c7; }
 
   .stats-bar { background: var(--primary-light); padding: 10px 1rem; overflow-x: auto; }
   .stats-inner { max-width: 1400px; margin: 0 auto; display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
@@ -249,6 +247,7 @@
   .toggle-btn.accepted { background: #e8f4ff; color: var(--primary-light); border: 1.5px solid #b3d4f5; }
   .toggle-btn.rejected { background: var(--danger-bg); color: var(--danger); border: 1.5px solid #f5c6c6; }
   .toggle-btn.na { background: #f5f5f5; color: #b0bac9; border: 1.5px solid #e0e0e0; }
+  .toggle-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
   .del-btn { 
     background: none; 
@@ -494,11 +493,11 @@
   const studentsCollection = collection(db, 'students');
   
   let students = [];
-  let isConnected = false;
   
   const DAYS = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
   const HOURS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
   const AMPM = ['ص', 'م'];
+  const ACCEPTED_ORDER = ['na', 'accepted', 'rejected'];
   
   const DEFAULT_NAMES = [
     'سمية بنت باسم', 'سفانة بنت ماهر', 'رحمة أحمد توفيق', 'سهام بنت سرحان المطرفي',
@@ -524,27 +523,25 @@
   }
 
   function updateConnectionStatus(connected) {
-    isConnected = connected;
     const statusDiv = document.getElementById('connectionStatus');
     if (connected) {
       statusDiv.innerHTML = `<span>☁️ متصل بـ Firebase Cloud</span><span class="status-online">✅ متزامن</span>`;
     } else {
-      statusDiv.innerHTML = `<span>⚠️ غير متصل بالإنترنت</span><span class="status-offline">⏳ في انتظار الاتصال...</span><button class="sync-btn" onclick="window.retryConnection()">🔄 إعادة المحاولة</button>`;
+      statusDiv.innerHTML = `<span>⚠️ غير متصل بالإنترنت</span><span class="status-offline">⏳ في انتظار الاتصال...</span><button class="sync-btn" onclick="window.location.reload()">🔄 إعادة المحاولة</button>`;
     }
   }
 
   // Real-time listener from Firebase
   onSnapshot(query(studentsCollection, orderBy('createdAt', 'asc')), (snapshot) => {
     students = [];
-    snapshot.forEach(doc => {
+    snapshot.forEach(docSnap => {
       students.push({
-        firebaseId: doc.id,
-        ...doc.data()
+        firebaseId: docSnap.id,
+        ...docSnap.data()
       });
     });
     
     if (students.length === 0) {
-      // Add default data if empty
       addDefaultData();
     } else {
       filterTable();
@@ -592,26 +589,25 @@
     document.getElementById('stat-rejected').textContent = students.filter(s => s.accepted === 'rejected').length;
   }
 
+  // ✅ FIX: updateStudent now receives plain values (no student object in onclick)
   window.updateStudent = async function(id, field, value) {
-    const student = students.find(s => s.firebaseId === id);
-    if (student) {
-      try {
-        await updateDoc(doc(db, 'students', id), { [field]: value });
-        let msg = '';
-        if (field === 'name') msg = '💾 تم حفظ الاسم في السحاب';
-        else if (field === 'day') msg = '📅 تم تحديث اليوم';
-        else if (field === 'hour') msg = '⏰ تم تحديث الساعة';
-        else if (field === 'ampm') msg = '☀️ تم تحديث الفترة';
-        else if (field === 'interview') msg = value === 'done' ? '✅ تم تسجيل المقابلة' : '⏳ تم إلغاء المقابلة';
-        else if (field === 'accepted') {
-          if (value === 'accepted') msg = '🎉 تم تسجيل القبول';
-          else if (value === 'rejected') msg = '❌ تم تسجيل عدم القبول';
-          else msg = '↩️ تم إعادة ضبط القبول';
-        }
-        showToast(msg);
-      } catch (error) {
-        showToast('❌ خطأ في الحفظ', true);
+    try {
+      await updateDoc(doc(db, 'students', id), { [field]: value });
+      let msg = '';
+      if (field === 'name') msg = '💾 تم حفظ الاسم في السحاب';
+      else if (field === 'day') msg = '📅 تم تحديث اليوم';
+      else if (field === 'hour') msg = '⏰ تم تحديث الساعة';
+      else if (field === 'ampm') msg = '☀️ تم تحديث الفترة';
+      else if (field === 'interview') msg = value === 'done' ? '✅ تم تسجيل المقابلة' : '⏳ تم إلغاء المقابلة';
+      else if (field === 'accepted') {
+        if (value === 'accepted') msg = '🎉 تم تسجيل القبول';
+        else if (value === 'rejected') msg = '❌ تم تسجيل عدم القبول';
+        else msg = '↩️ تم إعادة ضبط القبول';
       }
+      showToast(msg);
+    } catch (error) {
+      console.error("Update error:", error);
+      showToast('❌ خطأ في الحفظ', true);
     }
   };
 
@@ -695,10 +691,6 @@
     }
   };
 
-  window.retryConnection = function() {
-    window.location.reload();
-  };
-
   function renderTable(filteredList) {
     const tbody = document.getElementById('tbody');
     const data = filteredList || students;
@@ -709,60 +701,70 @@
     
     tbody.innerHTML = '';
     data.forEach((student, idx) => {
+      const id = student.firebaseId;
       const ivClass = student.interview === 'done' ? 'done' : 'pending';
       const ivText = student.interview === 'done' ? '✅ تمت' : '⏳ لم تُجرَ';
+      // ✅ FIX: Calculate next interview value here in JS, pass as string to onclick
+      const nextInterview = student.interview === 'pending' ? 'done' : 'pending';
       
       let acClass = 'na', acText = '— لم يُحدَّد';
       if (student.accepted === 'accepted') { acClass = 'accepted'; acText = '✔️ مقبولة'; }
       else if (student.accepted === 'rejected') { acClass = 'rejected'; acText = '✖️ غير مقبولة'; }
       
-      const acDisabled = student.interview !== 'done' ? 'disabled style="opacity:0.5;cursor:not-allowed;"' : '';
+      // ✅ FIX: Calculate next accepted value here in JS, pass as string to onclick
+      const curAcceptedIdx = ACCEPTED_ORDER.indexOf(student.accepted || 'na');
+      const nextAccepted = ACCEPTED_ORDER[(curAcceptedIdx + 1) % ACCEPTED_ORDER.length];
+      const acDisabled = student.interview !== 'done';
       
       const tr = document.createElement('tr');
-      tr.setAttribute('data-id', student.firebaseId);
+      tr.setAttribute('data-id', id);
       tr.innerHTML = `
         <td>${idx + 1}</td>
         <td class="name-td">
           <div class="name-cell">
-            <input type="text" value="${escapeHtml(student.name || '')}" placeholder="اكتبي اسم الطالبة..." id="name-${student.firebaseId}" onkeypress="if(event.key==='Enter'){updateStudent('${student.firebaseId}','name',this.value)}">
-            <button class="save-name-btn" onclick="updateStudent('${student.firebaseId}','name',document.getElementById('name-${student.firebaseId}').value)">💾</button>
+            <input type="text" value="${escapeHtml(student.name || '')}" placeholder="اكتبي اسم الطالبة..." id="name-${id}" onkeypress="if(event.key==='Enter'){updateStudent('${id}','name',this.value)}">
+            <button class="save-name-btn" onclick="updateStudent('${id}','name',document.getElementById('name-${id}').value)">💾</button>
           </div>
         </td>
         <td>
-          <select class="day-select" onchange="updateStudent('${student.firebaseId}','day',this.value)">
+          <select class="day-select" onchange="updateStudent('${id}','day',this.value)">
             <option value="">-- اليوم --</option>
             ${DAYS.map(d => `<option value="${d}" ${student.day === d ? 'selected' : ''}>${d}</option>`).join('')}
           </select>
         </td>
         <td>
           <div class="time-wrapper">
-            <select class="time-hour" onchange="updateStudent('${student.firebaseId}','hour',this.value)">
+            <select class="time-hour" onchange="updateStudent('${id}','hour',this.value)">
               <option value="">س</option>
               ${HOURS.map(h => `<option value="${h}" ${student.hour === h ? 'selected' : ''}>${h}</option>`).join('')}
             </select>
-            <select class="time-ampm" onchange="updateStudent('${student.firebaseId}','ampm',this.value)">
+            <select class="time-ampm" onchange="updateStudent('${id}','ampm',this.value)">
               ${AMPM.map(a => `<option value="${a}" ${student.ampm === a ? 'selected' : ''}>${a === 'ص' ? 'صباحاً' : 'مساءً'}</option>`).join('')}
             </select>
           </div>
         </td>
         <td>
-          <button class="toggle-btn ${ivClass}" onclick="updateStudent('${student.firebaseId}','interview', student.interview === 'pending' ? 'done' : 'pending')">
+          <button class="toggle-btn ${ivClass}" onclick="updateStudent('${id}','interview','${nextInterview}')">
             ${ivText}
           </button>
         </td>
         <td>
-          <button class="toggle-btn ${acClass}" onclick="if(student.interview==='done'){ const order=['na','accepted','rejected']; const cur=order.indexOf('${student.accepted}'); updateStudent('${student.firebaseId}','accepted',order[(cur+1)%3]); }" ${acDisabled}>
+          <button class="toggle-btn ${acClass}" 
+            onclick="updateStudent('${id}','accepted','${nextAccepted}')"
+            ${acDisabled ? 'disabled' : ''}>
             ${acText}
           </button>
         </td>
         <td>
-          <button class="del-btn" onclick="deleteStudent('${student.firebaseId}')" title="حذف">🗑️</button>
+          <button class="del-btn" onclick="deleteStudent('${id}')" title="حذف">🗑️</button>
         </td>
       `;
       tbody.appendChild(tr);
     });
     
-    document.getElementById('footer-info').textContent = filteredList ? `تعرض ${data.length} من ${students.length} سجل` : `إجمالي السجلات: ${students.length}`;
+    document.getElementById('footer-info').textContent = filteredList 
+      ? `تعرض ${data.length} من ${students.length} سجل` 
+      : `إجمالي السجلات: ${students.length}`;
   }
 
   window.filterTable = function() {
@@ -779,6 +781,7 @@
       return matchSearch && matchDay && matchInterview && matchAccepted;
     });
     renderTable(filtered);
+    updateStats();
   };
 
   window.exportCSV = function() {
@@ -798,12 +801,9 @@
     showToast('📥 تم تصدير الجدول');
   };
 
-  function escapeHtml(str) { return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-
-  // Make functions global
-  window.retryConnection = retryConnection;
-  window.filterTable = filterTable;
-  window.exportCSV = exportCSV;
+  function escapeHtml(str) { 
+    return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); 
+  }
 </script>
 </body>
 </html>
