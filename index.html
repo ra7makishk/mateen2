@@ -2,8 +2,8 @@
 <html lang="ar" dir="rtl">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
 <title>برنامج متين 2</title>
 
@@ -12,249 +12,278 @@
 <style>
 
 *{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
 body{
-  font-family:'Cairo',sans-serif;
-  background:linear-gradient(135deg,#1a3a5c,#2557a7);
-  min-height:100vh;
-  padding:15px;
+font-family:'Cairo',sans-serif;
+background:linear-gradient(135deg,#1a3a5c,#2557a7);
+min-height:100vh;
+padding:15px;
 }
 
 .container{
-  max-width:1400px;
-  margin:auto;
-  background:white;
-  border-radius:25px;
-  padding:20px;
-  box-shadow:0 20px 60px rgba(0,0,0,.3);
+max-width:1450px;
+margin:auto;
+background:white;
+border-radius:25px;
+padding:20px;
+box-shadow:0 20px 60px rgba(0,0,0,.3);
 }
 
 h1{
-  color:#1a3a5c;
-  margin-bottom:10px;
+color:#1a3a5c;
+margin-bottom:10px;
 }
 
 .sub{
-  color:#666;
-  margin-bottom:20px;
-  border-right:4px solid #d4a853;
-  padding-right:12px;
+color:#666;
+margin-bottom:20px;
+border-right:4px solid #d4a853;
+padding-right:12px;
 }
 
 .stats{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
-  gap:12px;
-  margin-bottom:20px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+gap:12px;
+margin-bottom:20px;
 }
 
 .stat-card{
-  background:linear-gradient(135deg,#1a3a5c,#2557a7);
-  color:white;
-  padding:12px;
-  border-radius:16px;
-  text-align:center;
+background:linear-gradient(135deg,#1a3a5c,#2557a7);
+color:white;
+padding:12px;
+border-radius:16px;
+text-align:center;
 }
 
 .stat-number{
-  font-size:24px;
-  font-weight:bold;
+font-size:24px;
+font-weight:bold;
 }
 
 .stat-label{
-  font-size:11px;
+font-size:11px;
 }
 
 .bulk-area{
-  background:#f0f4f8;
-  padding:15px;
-  border-radius:16px;
-  margin-bottom:20px;
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
+background:#f0f4f8;
+padding:15px;
+border-radius:16px;
+margin-bottom:20px;
+display:flex;
+gap:12px;
+flex-wrap:wrap;
 }
 
 .bulk-area textarea{
-  flex:1;
-  min-height:90px;
-  padding:12px;
-  border:2px solid #e0e8f0;
-  border-radius:12px;
-  font-family:'Cairo',sans-serif;
+flex:1;
+min-height:90px;
+padding:12px;
+border:2px solid #e0e8f0;
+border-radius:12px;
+font-family:'Cairo',sans-serif;
 }
 
 .bulk-area button{
-  background:#2196F3;
-  color:white;
-  border:none;
-  padding:10px 20px;
-  border-radius:12px;
-  cursor:pointer;
-  font-weight:bold;
+background:#2196F3;
+color:white;
+border:none;
+padding:10px 20px;
+border-radius:12px;
+cursor:pointer;
+font-weight:bold;
 }
 
-.controls{
-  display:flex;
-  gap:10px;
-  margin-bottom:20px;
-  flex-wrap:wrap;
+.top-filters{
+display:flex;
+gap:12px;
+flex-wrap:wrap;
+margin-bottom:20px;
+align-items:center;
 }
 
-.controls input{
-  flex:1;
-  padding:10px;
-  border:2px solid #e0e8f0;
-  border-radius:10px;
-  font-family:'Cairo',sans-serif;
+.modern-select{
+padding:14px 18px;
+border-radius:16px;
+border:2px solid #dfe5ec;
+background:white;
+font-family:'Cairo',sans-serif;
+font-size:15px;
+min-width:170px;
+cursor:pointer;
+outline:none;
 }
 
-.controls button{
-  background:#f44336;
-  color:white;
-  border:none;
-  padding:10px 18px;
-  border-radius:10px;
-  cursor:pointer;
+.modern-select:focus{
+border-color:#1a3a5c;
+}
+
+.search-modern{
+flex:1;
+min-width:250px;
+padding:14px 18px;
+border-radius:16px;
+border:2px solid #dfe5ec;
+font-family:'Cairo',sans-serif;
+font-size:15px;
+outline:none;
+}
+
+.search-modern:focus{
+border-color:#1a3a5c;
+}
+
+.filter-btn{
+padding:14px 22px;
+border:none;
+border-radius:16px;
+font-family:'Cairo',sans-serif;
+font-size:15px;
+cursor:pointer;
+}
+
+.danger-btn{
+background:#fff4f4;
+color:#d84343;
+border:1px solid #ffd4d4;
 }
 
 .table-wrapper{
-  overflow-x:auto;
-  border-radius:16px;
-  border:1px solid #e0e8f0;
+overflow-x:auto;
+border-radius:16px;
+border:1px solid #e0e8f0;
 }
 
 table{
-  width:100%;
-  border-collapse:collapse;
-  min-width:850px;
+width:100%;
+border-collapse:collapse;
+min-width:1000px;
 }
 
 th{
-  background:#1a3a5c;
-  color:white;
-  padding:12px 8px;
+background:#1a3a5c;
+color:white;
+padding:12px 8px;
 }
 
 td{
-  padding:8px 6px;
-  text-align:center;
-  border-bottom:1px solid #e0e8f0;
+padding:8px 6px;
+text-align:center;
+border-bottom:1px solid #e0e8f0;
 }
 
 tr:hover{
-  background:#f8f9fc;
+background:#f8f9fc;
 }
 
 .name-cell{
-  display:flex;
-  gap:6px;
-  align-items:center;
+display:flex;
+gap:6px;
+align-items:center;
 }
 
 .name-cell input{
-  flex:1;
-  padding:6px 8px;
-  border:1px solid #ddd;
-  border-radius:8px;
-  font-family:'Cairo',sans-serif;
+flex:1;
+padding:6px 8px;
+border:1px solid #ddd;
+border-radius:8px;
+font-family:'Cairo',sans-serif;
 }
 
-.btn-save{
-  background:#4CAF50;
-  color:white;
-  border:none;
-  padding:5px 10px;
-  border-radius:6px;
-  cursor:pointer;
+.status-select{
+padding:6px 8px;
+border-radius:8px;
+border:1px solid #ddd;
+font-family:'Cairo',sans-serif;
+background:white;
 }
 
 .day-select,
 .time-hour,
 .time-minute,
 .time-ampm{
-  padding:6px;
-  border:1px solid #ddd;
-  border-radius:8px;
-  font-family:'Cairo',sans-serif;
+padding:6px;
+border:1px solid #ddd;
+border-radius:8px;
+font-family:'Cairo',sans-serif;
 }
 
 .time-hour{
-  width:60px;
+width:60px;
 }
 
 .time-minute{
-  width:70px;
+width:70px;
 }
 
 .time-ampm{
-  width:90px;
+width:90px;
 }
 
 .btn-interview,
 .btn-accept{
-  padding:5px 12px;
-  border:none;
-  border-radius:20px;
-  cursor:pointer;
-  font-weight:bold;
+padding:5px 12px;
+border:none;
+border-radius:20px;
+cursor:pointer;
+font-weight:bold;
 }
 
 .btn-pending{
-  background:#ff9800;
-  color:white;
+background:#ff9800;
+color:white;
 }
 
 .btn-done{
-  background:#4CAF50;
-  color:white;
+background:#4CAF50;
+color:white;
 }
 
 .btn-na{
-  background:#9e9e9e;
-  color:white;
+background:#9e9e9e;
+color:white;
 }
 
 .btn-accepted{
-  background:#2196F3;
-  color:white;
+background:#2196F3;
+color:white;
 }
 
 .btn-rejected{
-  background:#f44336;
-  color:white;
+background:#f44336;
+color:white;
 }
 
 .btn-delete{
-  background:none;
-  border:none;
-  font-size:18px;
-  color:#f44336;
-  cursor:pointer;
+background:none;
+border:none;
+font-size:18px;
+color:#f44336;
+cursor:pointer;
 }
 
 .add-btn{
-  width:100%;
-  padding:12px;
-  margin-top:20px;
-  background:#e8f4fd;
-  border:2px dashed #2196F3;
-  border-radius:12px;
-  cursor:pointer;
-  font-weight:bold;
-  color:#2196F3;
+width:100%;
+padding:12px;
+margin-top:20px;
+background:#e8f4fd;
+border:2px dashed #2196F3;
+border-radius:12px;
+cursor:pointer;
+font-weight:bold;
+color:#2196F3;
 }
 
 .footer{
-  margin-top:20px;
-  padding:10px;
-  text-align:center;
-  background:#f0f4f8;
-  border-radius:12px;
+margin-top:20px;
+padding:10px;
+text-align:center;
+background:#f0f4f8;
+border-radius:12px;
 }
 
 </style>
@@ -309,18 +338,38 @@ tr:hover{
 
 </div>
 
-<div class="controls">
+<div class="top-filters">
+
+<button class="filter-btn danger-btn" onclick="clearAll()">
+مسح الكل 🗑️
+</button>
+
+<select id="resultFilter" class="modern-select" onchange="applyFilters()">
+<option value="all">📊 كل النتائج</option>
+<option value="accepted">✔️ المقبولات</option>
+<option value="rejected">✖️ غير المقبولات</option>
+<option value="na">⏳ لم يحدد</option>
+</select>
+
+<select id="interviewFilter" class="modern-select" onchange="applyFilters()">
+<option value="all">🎙️ كل المقابلات</option>
+<option value="done">✅ تمت</option>
+<option value="pending">⏳ لم تتم</option>
+</select>
+
+<select id="statusFilter" class="modern-select" onchange="applyFilters()">
+<option value="all">📖 كل الطالبات</option>
+<option value="mateen">📖 بنات متين</option>
+<option value="new">✨ المستجدات</option>
+</select>
 
 <input
 type="text"
 id="search"
-placeholder="🔍 بحث..."
-onkeyup="filterTable()"
+placeholder="🔎 إبحثي عن طالبة..."
+onkeyup="applyFilters()"
+class="search-modern"
 >
-
-<button onclick="clearAll()">
-🗑️ حذف الكل
-</button>
 
 </div>
 
@@ -364,24 +413,26 @@ import { initializeApp }
 from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 
 import {
-  getFirestore,
-  collection,
-  addDoc,
-  updateDoc,
-  deleteDoc,
-  doc,
-  onSnapshot,
-  getDocs
+getFirestore,
+collection,
+addDoc,
+updateDoc,
+deleteDoc,
+doc,
+onSnapshot,
+getDocs,
+query,
+orderBy
 }
 from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBIVtK3tNHSnQW6Pfq-cZgSvLmTX6kaeTk",
-  authDomain: "mateen-a122d.firebaseapp.com",
-  projectId: "mateen-a122d",
-  storageBucket: "mateen-a122d.firebasestorage.app",
-  messagingSenderId: "90050379590",
-  appId: "1:90050379590:web:a10d71638f09837cef2f47"
+apiKey: "AIzaSyBIVtK3tNHSnQW6Pfq-cZgSvLmTX6kaeTk",
+authDomain: "mateen-a122d.firebaseapp.com",
+projectId: "mateen-a122d",
+storageBucket: "mateen-a122d.firebasestorage.app",
+messagingSenderId: "90050379590",
+appId: "1:90050379590:web:a10d71638f09837cef2f47"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -410,56 +461,54 @@ const MINUTES = [
 let students = [];
 
 function escapeHtml(str){
-
-  return (str || '')
-  .replace(/&/g,'&amp;')
-  .replace(/</g,'&lt;')
-  .replace(/>/g,'&gt;');
-
+return (str || '')
+.replace(/&/g,'&amp;')
+.replace(/</g,'&lt;')
+.replace(/>/g,'&gt;');
 }
 
 function showToast(msg){
 
-  const toast = document.createElement('div');
+const toast = document.createElement('div');
 
-  toast.innerText = msg;
+toast.innerText = msg;
 
-  toast.style.cssText = `
-    position:fixed;
-    bottom:20px;
-    left:50%;
-    transform:translateX(-50%);
-    background:#1a3a5c;
-    color:white;
-    padding:10px 20px;
-    border-radius:10px;
-    z-index:9999;
-  `;
+toast.style.cssText = `
+position:fixed;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+background:#1a3a5c;
+color:white;
+padding:10px 20px;
+border-radius:10px;
+z-index:9999;
+`;
 
-  document.body.appendChild(toast);
+document.body.appendChild(toast);
 
-  setTimeout(()=>{
-    toast.remove();
-  },2000);
+setTimeout(()=>{
+toast.remove();
+},2000);
 
 }
 
 function updateStats(){
 
-  document.getElementById('total').innerText =
-  students.length;
+document.getElementById('total').innerText =
+students.length;
 
-  document.getElementById('interviewed').innerText =
-  students.filter(s=>s.interview==='done').length;
+document.getElementById('interviewed').innerText =
+students.filter(s=>s.interview==='done').length;
 
-  document.getElementById('pendingCount').innerText =
-  students.filter(s=>s.interview==='pending').length;
+document.getElementById('pendingCount').innerText =
+students.filter(s=>s.interview==='pending').length;
 
-  document.getElementById('accepted').innerText =
-  students.filter(s=>s.accepted==='accepted').length;
+document.getElementById('accepted').innerText =
+students.filter(s=>s.accepted==='accepted').length;
 
-  document.getElementById('rejected').innerText =
-  students.filter(s=>s.accepted==='rejected').length;
+document.getElementById('rejected').innerText =
+students.filter(s=>s.accepted==='rejected').length;
 
 }
 
@@ -487,16 +536,6 @@ tbody.innerHTML = '';
 
 data.forEach((s,index)=>{
 
-const interviewClass =
-s.interview === 'done'
-? 'btn-done'
-: 'btn-pending';
-
-const interviewText =
-s.interview === 'done'
-? '✅ تمت'
-: '⏳ لم تتم';
-
 let acceptClass = 'btn-na';
 let acceptText = '— لم يحدد';
 
@@ -522,16 +561,37 @@ tbody.innerHTML += `
 
 <input
 type="text"
-id="name-${s.id}"
 value="${escapeHtml(s.name)}"
+oninput="autoSaveName('${s.id}',this.value)"
 >
 
-<button
-class="btn-save"
-onclick="updateName('${s.id}')"
+<select
+class="status-select"
+onchange="updateField('${s.id}','status',this.value)"
 >
-💾
-</button>
+
+<option
+value=""
+${!s.status?'selected':''}
+>
+🏷️ التصنيف
+</option>
+
+<option
+value="mateen"
+${s.status==='mateen'?'selected':''}
+>
+📖 بنات متين
+</option>
+
+<option
+value="new"
+${s.status==='new'?'selected':''}
+>
+✨ المستجدات
+</option>
+
+</select>
 
 </div>
 
@@ -547,16 +607,12 @@ onchange="updateField('${s.id}','day',this.value)"
 <option value="">-- اليوم --</option>
 
 ${DAYS.map(d=>`
-
 <option
 value="${d}"
 ${s.day===d?'selected':''}
 >
-
 ${d}
-
 </option>
-
 `).join('')}
 
 </select>
@@ -573,16 +629,12 @@ onchange="updateField('${s.id}','hour',this.value)"
 <option value="">ساعة</option>
 
 ${HOURS.map(h=>`
-
 <option
 value="${h}"
 ${s.hour===h?'selected':''}
 >
-
 ${h}
-
 </option>
-
 `).join('')}
 
 </select>
@@ -597,16 +649,12 @@ onchange="updateField('${s.id}','minute',this.value)"
 <option value="">دقيقة</option>
 
 ${MINUTES.map(m=>`
-
 <option
 value="${m}"
 ${s.minute===m?'selected':''}
 >
-
 ${m}
-
 </option>
-
 `).join('')}
 
 </select>
@@ -620,18 +668,14 @@ onchange="updateField('${s.id}','ampm',this.value)"
 value="ص"
 ${s.ampm==='ص'?'selected':''}
 >
-
 صباحاً
-
 </option>
 
 <option
 value="م"
 ${s.ampm==='م'?'selected':''}
 >
-
 مساءً
-
 </option>
 
 </select>
@@ -641,11 +685,11 @@ ${s.ampm==='م'?'selected':''}
 <td>
 
 <button
-class="btn-interview ${interviewClass}"
+class="btn-interview ${s.interview==='done'?'btn-done':'btn-pending'}"
 onclick="toggleInterview('${s.id}','${s.interview}')"
 >
 
-${interviewText}
+${s.interview==='done'?'✅ تمت':'⏳ لم تتم'}
 
 </button>
 
@@ -670,9 +714,7 @@ ${acceptText}
 class="btn-delete"
 onclick="deleteStudent('${s.id}')"
 >
-
 🗑️
-
 </button>
 
 </td>
@@ -687,16 +729,10 @@ updateStats();
 
 }
 
-import {
-  query,
-  orderBy
-}
-from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
-
 const studentsQuery =
 query(
-  collection(db,"students"),
-  orderBy("order")
+collection(db,"students"),
+orderBy("order")
 );
 
 onSnapshot(studentsQuery,(snapshot)=>{
@@ -720,8 +756,9 @@ window.addRow = async function(){
 
 await addDoc(collection(db,"students"),{
 
-order: Date.now() + i,
-name:name.trim(),
+order: Date.now(),
+name:'طالبة جديدة',
+status:'',
 day:'',
 hour:'',
 minute:'00',
@@ -751,13 +788,9 @@ const name = names[i];
 
 await addDoc(collection(db,"students"),{
 
-order: Date.now(),
-
-order: Date.now(),
-
-order: Date.now(),
-
+order: Date.now() + i,
 name:name.trim(),
+status:'',
 day:'',
 hour:'',
 minute:'00',
@@ -775,16 +808,11 @@ showToast('تمت إضافة الأسماء');
 
 }
 
-window.updateName = async function(id){
-
-const name =
-document.getElementById(`name-${id}`).value;
+window.autoSaveName = async function(id,value){
 
 await updateDoc(doc(db,"students",id),{
-name:name
+name:value
 });
-
-showToast('تم الحفظ');
 
 }
 
@@ -856,19 +884,52 @@ showToast('تم حذف الكل');
 
 }
 
-window.filterTable = function(){
+window.applyFilters = function(){
 
 const search =
 document.getElementById('search')
 .value
 .toLowerCase();
 
-const filtered =
-students.filter(s=>
+const interview =
+document.getElementById('interviewFilter')
+.value;
+
+const result =
+document.getElementById('resultFilter')
+.value;
+
+const status =
+document.getElementById('statusFilter')
+.value;
+
+const filtered = students.filter(s=>{
+
+const matchSearch =
 (s.name || '')
 .toLowerCase()
-.includes(search)
+.includes(search);
+
+const matchInterview =
+interview === 'all'
+|| s.interview === interview;
+
+const matchResult =
+result === 'all'
+|| s.accepted === result;
+
+const matchStatus =
+status === 'all'
+|| s.status === status;
+
+return (
+matchSearch &&
+matchInterview &&
+matchResult &&
+matchStatus
 );
+
+});
 
 renderTable(filtered);
 
