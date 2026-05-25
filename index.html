@@ -4,313 +4,715 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>برنامج متين - جدول المقابلات والقبول</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: 'Cairo', sans-serif;
-    background: linear-gradient(135deg, #1a3a5c, #2557a7);
-    min-height: 100vh;
-    padding: 15px;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'Cairo',sans-serif;
+  background:linear-gradient(135deg,#1a3a5c,#2557a7);
+  min-height:100vh;
+  padding:15px;
+}
+
+.container{
+  max-width:1400px;
+  margin:auto;
+  background:white;
+  border-radius:25px;
+  padding:20px;
+  box-shadow:0 20px 60px rgba(0,0,0,.3);
+}
+
+h1{
+  color:#1a3a5c;
+  font-size:24px;
+  margin-bottom:10px;
+}
+
+.sub{
+  color:#666;
+  margin-bottom:20px;
+  border-right:4px solid #d4a853;
+  padding-right:12px;
+  font-size:14px;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  gap:12px;
+  margin-bottom:20px;
+}
+
+.stat-card{
+  background:linear-gradient(135deg,#1a3a5c,#2557a7);
+  color:white;
+  padding:12px;
+  border-radius:16px;
+  text-align:center;
+}
+
+.stat-number{
+  font-size:24px;
+  font-weight:bold;
+}
+
+.stat-label{
+  font-size:11px;
+  margin-top:5px;
+}
+
+.bulk-area{
+  background:#f0f4f8;
+  padding:15px;
+  border-radius:16px;
+  margin-bottom:20px;
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.bulk-area textarea{
+  flex:1;
+  min-height:90px;
+  padding:12px;
+  border:2px solid #e0e8f0;
+  border-radius:12px;
+  font-family:'Cairo',sans-serif;
+}
+
+.bulk-area button{
+  background:#2196F3;
+  color:white;
+  border:none;
+  padding:10px 20px;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.controls{
+  display:flex;
+  gap:10px;
+  margin-bottom:20px;
+  flex-wrap:wrap;
+}
+
+.controls input,
+.controls select{
+  padding:10px 12px;
+  border:2px solid #e0e8f0;
+  border-radius:10px;
+  font-family:'Cairo',sans-serif;
+}
+
+.search{
+  flex:1;
+}
+
+.controls button{
+  background:#f44336;
+  color:white;
+  border:none;
+  padding:10px 18px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+.table-wrapper{
+  overflow-x:auto;
+  border-radius:16px;
+  border:1px solid #e0e8f0;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:750px;
+}
+
+th{
+  background:#1a3a5c;
+  color:white;
+  padding:12px 8px;
+}
+
+td{
+  padding:8px 6px;
+  text-align:center;
+  border-bottom:1px solid #e0e8f0;
+}
+
+tr:hover{
+  background:#f8f9fc;
+}
+
+.name-cell{
+  display:flex;
+  gap:6px;
+  align-items:center;
+}
+
+.name-cell input{
+  flex:1;
+  padding:6px 8px;
+  border:1px solid #ddd;
+  border-radius:8px;
+  font-family:'Cairo',sans-serif;
+}
+
+.btn-save{
+  background:#4CAF50;
+  color:white;
+  border:none;
+  padding:5px 10px;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.day-select,
+.time-hour,
+.time-ampm{
+  padding:6px;
+  border:1px solid #ddd;
+  border-radius:8px;
+  font-family:'Cairo',sans-serif;
+}
+
+.time-hour{
+  width:55px;
+}
+
+.btn-interview,
+.btn-accept{
+  padding:5px 12px;
+  border:none;
+  border-radius:20px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.btn-pending{
+  background:#ff9800;
+  color:white;
+}
+
+.btn-done{
+  background:#4CAF50;
+  color:white;
+}
+
+.btn-na{
+  background:#9e9e9e;
+  color:white;
+}
+
+.btn-accepted{
+  background:#2196F3;
+  color:white;
+}
+
+.btn-rejected{
+  background:#f44336;
+  color:white;
+}
+
+.btn-delete{
+  background:none;
+  border:none;
+  font-size:18px;
+  color:#f44336;
+  cursor:pointer;
+}
+
+.add-btn{
+  width:100%;
+  padding:12px;
+  margin-top:20px;
+  background:#e8f4fd;
+  border:2px dashed #2196F3;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:bold;
+  color:#2196F3;
+}
+
+.footer{
+  margin-top:20px;
+  padding:10px;
+  text-align:center;
+  background:#f0f4f8;
+  border-radius:12px;
+  font-size:12px;
+}
+
+@media(max-width:768px){
+  td,th{
+    font-size:11px;
   }
-  .container {
-    max-width: 1400px;
-    margin: 0 auto;
-    background: white;
-    border-radius: 25px;
-    padding: 20px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-  }
-  h1 { color: #1a3a5c; display: flex; align-items: center; gap: 10px; font-size: 22px; }
-  .sub { color: #666; margin-bottom: 20px; border-right: 4px solid #d4a853; padding-right: 12px; font-size: 14px; }
-  
-  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; margin-bottom: 20px; }
-  .stat-card { background: linear-gradient(135deg, #1a3a5c, #2557a7); color: white; padding: 12px; border-radius: 16px; text-align: center; }
-  .stat-number { font-size: 24px; font-weight: bold; }
-  .stat-label { font-size: 11px; opacity: 0.9; margin-top: 5px; }
-  
-  .bulk-area { background: #f0f4f8; padding: 15px; border-radius: 16px; margin-bottom: 20px; display: flex; gap: 12px; flex-wrap: wrap; }
-  .bulk-area textarea { flex: 1; padding: 12px; border: 2px solid #e0e8f0; border-radius: 12px; font-family: 'Cairo', sans-serif; min-height: 80px; font-size: 13px; }
-  .bulk-area button { background: #2196F3; color: white; border: none; padding: 10px 20px; border-radius: 12px; cursor: pointer; font-weight: bold; }
-  
-  .controls { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
-  .controls input, .controls select { padding: 10px 12px; border: 2px solid #e0e8f0; border-radius: 10px; font-family: 'Cairo', sans-serif; font-size: 13px; background: white; }
-  .search { flex: 1; min-width: 180px; }
-  .controls button { background: #f44336; color: white; border: none; padding: 10px 18px; border-radius: 10px; cursor: pointer; font-weight: bold; }
-  
-  .table-wrapper { overflow-x: auto; border-radius: 16px; border: 1px solid #e0e8f0; }
-  table { width: 100%; border-collapse: collapse; min-width: 750px; }
-  th { background: #1a3a5c; color: white; padding: 12px 8px; font-size: 13px; }
-  td { padding: 8px 6px; text-align: center; border-bottom: 1px solid #e0e8f0; font-size: 13px; }
-  tr:hover { background: #f8f9fc; }
-  
-  .name-cell { display: flex; gap: 6px; align-items: center; }
-  .name-cell input { flex: 1; padding: 6px 8px; border: 1px solid #ddd; border-radius: 8px; font-family: 'Cairo', sans-serif; min-width: 110px; }
-  .btn-save { background: #4CAF50; color: white; border: none; padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 11px; }
-  
-  .day-select, .time-hour, .time-ampm { padding: 6px 6px; border: 1px solid #ddd; border-radius: 8px; font-family: 'Cairo', sans-serif; background: white; }
-  .time-hour { width: 55px; }
-  .time-ampm { width: 65px; }
-  
-  .btn-interview, .btn-accept { padding: 5px 12px; border: none; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 11px; }
-  .btn-pending { background: #ff9800; color: white; }
-  .btn-done { background: #4CAF50; color: white; }
-  .btn-na { background: #9e9e9e; color: white; }
-  .btn-accepted { background: #2196F3; color: white; }
-  .btn-rejected { background: #f44336; color: white; }
-  
-  .btn-delete { background: none; border: none; font-size: 18px; cursor: pointer; color: #f44336; padding: 5px; }
-  .add-btn { width: 100%; padding: 12px; margin-top: 20px; background: #e8f4fd; border: 2px dashed #2196F3; border-radius: 12px; cursor: pointer; font-weight: bold; color: #2196F3; font-size: 14px; }
-  .footer { margin-top: 20px; padding: 10px; text-align: center; background: #f0f4f8; border-radius: 12px; font-size: 11px; color: #666; }
-  
-  @media (max-width: 768px) {
-    .container { padding: 15px; }
-    td, th { padding: 6px 4px; font-size: 11px; }
-    .name-cell input { min-width: 80px; }
-  }
+}
 </style>
 </head>
+
 <body>
+
 <div class="container">
+
   <h1>📖 برنامج متين 2</h1>
-  <div class="sub">نظام إدارة المقابلات والقبول - حفظ تلقائي في المتصفح ✅</div>
+
+  <div class="sub">
+    نظام إدارة المقابلات والقبول - مزامنة مباشرة بين جميع الأجهزة 🔥
+  </div>
 
   <div class="stats">
-    <div class="stat-card"><div class="stat-number" id="total">0</div><div class="stat-label">إجمالي الطالبات</div></div>
-    <div class="stat-card"><div class="stat-number" id="interviewed">0</div><div class="stat-label">تمت المقابلة</div></div>
-    <div class="stat-card"><div class="stat-number" id="pendingCount">0</div><div class="stat-label">لم تتم</div></div>
-    <div class="stat-card"><div class="stat-number" id="accepted">0</div><div class="stat-label">مقبولة</div></div>
-    <div class="stat-card"><div class="stat-number" id="rejected">0</div><div class="stat-label">غير مقبولة</div></div>
+    <div class="stat-card">
+      <div class="stat-number" id="total">0</div>
+      <div class="stat-label">إجمالي الطالبات</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-number" id="interviewed">0</div>
+      <div class="stat-label">تمت المقابلة</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-number" id="pendingCount">0</div>
+      <div class="stat-label">لم تتم</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-number" id="accepted">0</div>
+      <div class="stat-label">مقبولة</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-number" id="rejected">0</div>
+      <div class="stat-label">غير مقبولة</div>
+    </div>
   </div>
 
   <div class="bulk-area">
-    <textarea id="bulkNames" placeholder="📝 أدخلي الأسماء هنا (كل اسم في سطر منفصل)&#10;مثال:&#10;أسماء محمد&#10;نور علي&#10;فاطمة أحمد"></textarea>
+    <textarea id="bulkNames" placeholder="كل اسم في سطر"></textarea>
     <button onclick="addBulkNames()">➕ إضافة الكل</button>
   </div>
 
   <div class="controls">
-    <input type="text" id="search" class="search" placeholder="🔍 ابحثي عن طالبة..." onkeyup="filterTable()">
-    <select id="dayFilter" onchange="filterTable()">
-      <option value="">📅 كل الأيام</option>
-      <option>الأحد</option><option>الاثنين</option><option>الثلاثاء</option>
-      <option>الأربعاء</option><option>الخميس</option><option>الجمعة</option><option>السبت</option>
-    </select>
-    <select id="interviewFilter" onchange="filterTable()">
-      <option value="">🎙️ كل المقابلات</option>
-      <option value="done">✅ تمت</option>
-      <option value="pending">⏳ لم تتم</option>
-    </select>
-    <select id="acceptFilter" onchange="filterTable()">
-      <option value="">📊 كل النتائج</option>
-      <option value="accepted">🎉 مقبولة</option>
-      <option value="rejected">❌ غير مقبولة</option>
-      <option value="na">⏸️ لم يحدد</option>
-    </select>
-    <button onclick="clearAll()">🗑️ مسح الكل</button>
+    <input type="text" id="search" class="search" placeholder="🔍 بحث..." onkeyup="filterTable()">
+
+    <button onclick="clearAll()">🗑️ حذف الكل</button>
   </div>
 
   <div class="table-wrapper">
     <table>
-      <thead><tr><th>#</th><th>اسم الطالبة</th><th>اليوم</th><th>الساعة</th><th>المقابلة</th><th>القبول</th><th></th></tr></thead>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>اسم الطالبة</th>
+          <th>اليوم</th>
+          <th>الساعة</th>
+          <th>المقابلة</th>
+          <th>القبول</th>
+          <th></th>
+        </tr>
+      </thead>
+
       <tbody id="tableBody"></tbody>
     </table>
   </div>
 
-  <button class="add-btn" onclick="addRow()">+ إضافة طالبة جديدة</button>
-  <div class="footer">💾 يتم الحفظ تلقائياً في متصفحك | 🔒 البيانات تبقى حتى تغلقي المتصفح</div>
+  <button class="add-btn" onclick="addRow()">
+    + إضافة طالبة
+  </button>
+
+  <div class="footer">
+    ☁️ البيانات مشتركة بين كل الأجهزة
+  </div>
+
 </div>
 
-<script>
-  const STORAGE_KEY = 'mateen_complete_v2';
-  const DAYS = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
-  const HOURS = ['1','2','3','4','5','6','7','8','9','10','11','12'];
-  const AMPM = ['ص','م'];
+<script type="module">
 
-  let students = [];
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 
-  function loadData() {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if(saved && saved !== 'undefined') {
-      try {
-        students = JSON.parse(saved);
-      } catch(e) { students = []; }
-    }
-    if(!students || students.length === 0) {
-      students = [
-        {id:1, name:'سمية بنت باسم', day:'', hour:'', ampm:'ص', interview:'pending', accepted:'na'},
-        {id:2, name:'سفانة بنت ماهر', day:'', hour:'', ampm:'ص', interview:'pending', accepted:'na'},
-        {id:3, name:'رحمة أحمد توفيق', day:'', hour:'', ampm:'ص', interview:'pending', accepted:'na'},
-        {id:4, name:'فاطمة بنت محمد توفيق', day:'', hour:'', ampm:'ص', interview:'pending', accepted:'na'},
-        {id:5, name:'أمينة أحمد يوسف', day:'', hour:'', ampm:'ص', interview:'pending', accepted:'na'},
-        {id:6, name:'أميرة بشير سلطان', day:'', hour:'', ampm:'ص', interview:'pending', accepted:'na'},
-        {id:7, name:'عبير بشير سلطان', day:'', hour:'', ampm:'ص', interview:'pending', accepted:'na'},
-        {id:8, name:'زينب راجي لغالي', day:'', hour:'', ampm:'ص', interview:'pending', accepted:'na'}
-      ];
-      saveData();
-    }
-    renderTable();
-    updateStats();
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  doc,
+  onSnapshot,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBIVtK3tNHSnQW6Pfq-cZgSvLmTX6kaeTk",
+  authDomain: "mateen-a122d.firebaseapp.com",
+  projectId: "mateen-a122d",
+  storageBucket: "mateen-a122d.firebasestorage.app",
+  messagingSenderId: "90050379590",
+  appId: "1:90050379590:web:a10d71638f09837cef2f47"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const DAYS = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+const HOURS = ['1','2','3','4','5','6','7','8','9','10','11','12'];
+
+let students = [];
+
+function escapeHtml(str){
+  return (str || '')
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;');
+}
+
+function showToast(msg){
+  const toast = document.createElement('div');
+
+  toast.textContent = msg;
+
+  toast.style.cssText = `
+    position:fixed;
+    bottom:20px;
+    left:50%;
+    transform:translateX(-50%);
+    background:#1a3a5c;
+    color:white;
+    padding:10px 20px;
+    border-radius:10px;
+    z-index:9999;
+  `;
+
+  document.body.appendChild(toast);
+
+  setTimeout(()=>{
+    toast.remove();
+  },2000);
+}
+
+function updateStats(){
+  document.getElementById('total').innerText = students.length;
+
+  document.getElementById('interviewed').innerText =
+    students.filter(s=>s.interview==='done').length;
+
+  document.getElementById('pendingCount').innerText =
+    students.filter(s=>s.interview==='pending').length;
+
+  document.getElementById('accepted').innerText =
+    students.filter(s=>s.accepted==='accepted').length;
+
+  document.getElementById('rejected').innerText =
+    students.filter(s=>s.accepted==='rejected').length;
+}
+
+function renderTable(filteredData){
+
+  const data = filteredData || students;
+
+  const tbody = document.getElementById('tableBody');
+
+  if(data.length === 0){
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="7" style="padding:30px">
+          لا توجد بيانات
+        </td>
+      </tr>
+    `;
+    return;
   }
 
-  function saveData() { localStorage.setItem(STORAGE_KEY, JSON.stringify(students)); }
+  tbody.innerHTML = '';
 
-  function updateStats() {
-    document.getElementById('total').innerText = students.length;
-    document.getElementById('interviewed').innerText = students.filter(s => s.interview === 'done').length;
-    document.getElementById('pendingCount').innerText = students.filter(s => s.interview === 'pending').length;
-    document.getElementById('accepted').innerText = students.filter(s => s.accepted === 'accepted').length;
-    document.getElementById('rejected').innerText = students.filter(s => s.accepted === 'rejected').length;
-  }
+  data.forEach((s,index)=>{
 
-  function showToast(msg, isError = false) {
-    const toast = document.createElement('div');
-    toast.textContent = msg;
-    toast.style.cssText = `position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:${isError ? '#f44336' : '#1a3a5c'}; color:white; padding:10px 20px; border-radius:10px; z-index:1000; font-size:13px; white-space:nowrap; animation:fadeOut 2s ease;`;
-    document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 2000);
-  }
+    const interviewClass =
+      s.interview === 'done'
+      ? 'btn-done'
+      : 'btn-pending';
 
-  // Update Functions
-  window.updateName = function(id, newName) {
-    const s = students.find(s => s.id == id);
-    if(s && newName.trim()) {
-      s.name = newName.trim();
-      saveData();
-      filterTable();
-      showToast('✅ تم حفظ الاسم');
+    const interviewText =
+      s.interview === 'done'
+      ? '✅ تمت'
+      : '⏳ لم تتم';
+
+    let acceptClass = 'btn-na';
+    let acceptText = '— لم يحدد';
+
+    if(s.accepted === 'accepted'){
+      acceptClass = 'btn-accepted';
+      acceptText = '✔️ مقبولة';
     }
-  };
 
-  window.updateField = function(id, field, value) {
-    const s = students.find(s => s.id == id);
-    if(s) {
-      s[field] = value;
-      saveData();
-      filterTable();
+    if(s.accepted === 'rejected'){
+      acceptClass = 'btn-rejected';
+      acceptText = '✖️ غير مقبولة';
     }
-  };
 
-  window.updateInterview = function(id, current) {
-    const s = students.find(s => s.id == id);
-    if(s) {
-      const newStatus = current === 'pending' ? 'done' : 'pending';
-      s.interview = newStatus;
-      if(newStatus === 'pending') s.accepted = 'na';
-      saveData();
-      filterTable();
-      showToast(newStatus === 'done' ? '✅ تم تسجيل المقابلة' : '⏳ تم إلغاء المقابلة');
-    }
-  };
+    tbody.innerHTML += `
+      <tr>
 
-  window.updateAcceptance = function(id, current, interviewStatus) {
-    const s = students.find(s => s.id == id);
-    if(s) {
-      if(interviewStatus !== 'done') {
-        showToast('⚠️ لا يمكن تحديد القبول قبل إجراء المقابلة', true);
-        return;
-      }
-      const order = ['na','accepted','rejected'];
-      const newStatus = order[(order.indexOf(current) + 1) % 3];
-      s.accepted = newStatus;
-      saveData();
-      filterTable();
-      const msg = newStatus === 'accepted' ? '🎉 تم تسجيل القبول' : newStatus === 'rejected' ? '❌ تم تسجيل عدم القبول' : '↩️ تم إعادة ضبط القبول';
-      showToast(msg);
-    }
-  };
+        <td>${index + 1}</td>
 
-  window.deleteStudent = function(id) {
-    if(confirm('⚠️ هل أنت متأكدة من حذف هذه الطالبة؟')) {
-      students = students.filter(s => s.id != id);
-      saveData();
-      filterTable();
-      showToast('🗑️ تم الحذف');
-    }
-  };
+        <td>
+          <div class="name-cell">
 
-  window.addRow = function() {
-    students.push({ id: Date.now(), name: '', day: '', hour: '', ampm: 'ص', interview: 'pending', accepted: 'na' });
-    saveData();
-    filterTable();
-    showToast('✅ تمت إضافة سطر جديد');
-  };
+            <input
+              type="text"
+              id="name-${s.id}"
+              value="${escapeHtml(s.name)}"
+            >
 
-  window.addBulkNames = function() {
-    const text = document.getElementById('bulkNames').value;
-    if(!text.trim()) { showToast('⚠️ الرجاء إدخال الأسماء أولاً', true); return; }
-    const names = text.split('\n').filter(n => n.trim().length > 0);
-    for(let name of names) {
-      students.push({ id: Date.now() + Math.random(), name: name.trim(), day: '', hour: '', ampm: 'ص', interview: 'pending', accepted: 'na' });
-    }
-    saveData();
-    filterTable();
-    document.getElementById('bulkNames').value = '';
-    showToast(`✅ تمت إضافة ${names.length} اسم جديد`);
-  };
+            <button
+              class="btn-save"
+              onclick="updateName('${s.id}')"
+            >
+              💾
+            </button>
 
-  window.clearAll = function() {
-    if(confirm('⚠️ هل أنت متأكدة من مسح جميع البيانات؟ لا يمكن التراجع.')) {
-      students = [];
-      saveData();
-      renderTable();
-      updateStats();
-      showToast('🗑️ تم مسح جميع البيانات');
-    }
-  };
+          </div>
+        </td>
 
-  function renderTable(filtered) {
-    const data = filtered || students;
-    const tbody = document.getElementById('tableBody');
-    if(data.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:30px;">📭 لا توجد بيانات. أضيفي طالبات جديدة</td></tr>';
-      return;
-    }
-    tbody.innerHTML = '';
-    data.forEach((s, idx) => {
-      const interviewClass = s.interview === 'done' ? 'btn-done' : 'btn-pending';
-      const interviewText = s.interview === 'done' ? '✅ تمت' : '⏳ لم تتم';
-      
-      let acceptClass = 'btn-na', acceptText = '— لم يحدد';
-      if(s.accepted === 'accepted') { acceptClass = 'btn-accepted'; acceptText = '✔️ مقبولة'; }
-      else if(s.accepted === 'rejected') { acceptClass = 'btn-rejected'; acceptText = '✖️ غير مقبولة'; }
-      
-      const acceptDisabled = s.interview !== 'done' ? 'disabled style="opacity:0.5"' : '';
-      
-      tbody.innerHTML += `
-        <tr>
-          <td>${idx + 1}</td>
-          <td><div class="name-cell"><input type="text" id="name-${s.id}" value="${escapeHtml(s.name)}" placeholder="الاسم"><button class="btn-save" onclick="updateName(${s.id}, document.getElementById('name-${s.id}').value)">💾</button></div></td>
-          <td><select class="day-select" onchange="updateField(${s.id}, 'day', this.value)"><option value="">-- اليوم --</option>${DAYS.map(d => `<option ${s.day === d ? 'selected' : ''}>${d}</option>`).join('')}</select></td>
-          <td><select class="time-hour" onchange="updateField(${s.id}, 'hour', this.value)"><option value="">س</option>${HOURS.map(h => `<option ${s.hour === h ? 'selected' : ''}>${h}</option>`).join('')}</select> <select class="time-ampm" onchange="updateField(${s.id}, 'ampm', this.value)">${AMPM.map(a => `<option ${s.ampm === a ? 'selected' : ''}>${a === 'ص' ? 'صباحاً' : 'مساءً'}</option>`).join('')}</select></td>
-          <td><button class="btn-interview ${interviewClass}" onclick="updateInterview(${s.id}, '${s.interview}')">${interviewText}</button></td>
-          <td><button class="btn-accept ${acceptClass}" onclick="updateAcceptance(${s.id}, '${s.accepted}', '${s.interview}')" ${acceptDisabled}>${acceptText}</button></td>
-          <td><button class="btn-delete" onclick="deleteStudent(${s.id})">🗑️</button></td>
-        </tr>`;
+        <td>
+
+          <select
+            class="day-select"
+            onchange="updateField('${s.id}','day',this.value)"
+          >
+
+            <option value="">-- اليوم --</option>
+
+            ${DAYS.map(d=>`
+              <option
+                ${s.day===d?'selected':''}
+              >
+                ${d}
+              </option>
+            `).join('')}
+
+          </select>
+
+        </td>
+
+        <td>
+
+          <select
+            class="time-hour"
+            onchange="updateField('${s.id}','hour',this.value)"
+          >
+
+            <option value="">س</option>
+
+            ${HOURS.map(h=>`
+              <option
+                ${s.hour===h?'selected':''}
+              >
+                ${h}
+              </option>
+            `).join('')}
+
+          </select>
+
+        </td>
+
+        <td>
+
+          <button
+            class="btn-interview ${interviewClass}"
+            onclick="toggleInterview('${s.id}','${s.interview}')"
+          >
+            ${interviewText}
+          </button>
+
+        </td>
+
+        <td>
+
+          <button
+            class="btn-accept ${acceptClass}"
+            onclick="toggleAcceptance('${s.id}','${s.accepted}','${s.interview}')"
+          >
+            ${acceptText}
+          </button>
+
+        </td>
+
+        <td>
+
+          <button
+            class="btn-delete"
+            onclick="deleteStudent('${s.id}')"
+          >
+            🗑️
+          </button>
+
+        </td>
+
+      </tr>
+    `;
+  });
+
+  updateStats();
+}
+
+onSnapshot(collection(db,"students"), (snapshot)=>{
+
+  students = [];
+
+  snapshot.forEach((docItem)=>{
+
+    students.push({
+      id: docItem.id,
+      ...docItem.data()
     });
+
+  });
+
+  renderTable();
+});
+
+window.addRow = async function(){
+
+  await addDoc(collection(db,"students"),{
+    name:'',
+    day:'',
+    hour:'',
+    interview:'pending',
+    accepted:'na'
+  });
+
+  showToast('تمت الإضافة');
+}
+
+window.addBulkNames = async function(){
+
+  const text =
+    document.getElementById('bulkNames').value;
+
+  if(!text.trim()) return;
+
+  const names =
+    text.split('\n').filter(n=>n.trim());
+
+  for(const name of names){
+
+    await addDoc(collection(db,"students"),{
+      name:name.trim(),
+      day:'',
+      hour:'',
+      interview:'pending',
+      accepted:'na'
+    });
+
   }
 
-  window.filterTable = function() {
-    const search = document.getElementById('search').value.toLowerCase();
-    const day = document.getElementById('dayFilter').value;
-    const interview = document.getElementById('interviewFilter').value;
-    const accept = document.getElementById('acceptFilter').value;
-    const filtered = students.filter(s => {
-      return (!search || (s.name || '').toLowerCase().includes(search)) &&
-             (!day || s.day === day) &&
-             (!interview || s.interview === interview) &&
-             (!accept || s.accepted === accept);
-    });
-    renderTable(filtered);
-  };
+  document.getElementById('bulkNames').value='';
 
-  function escapeHtml(str) { return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  showToast('تمت الإضافة');
+}
 
-  // Add animation
-  const style = document.createElement('style');
-  style.textContent = `@keyframes fadeOut { 0% { opacity: 0; transform: translateX(-50%) translateY(20px); } 15% { opacity: 1; transform: translateX(-50%) translateY(0); } 85% { opacity: 1; } 100% { opacity: 0; transform: translateX(-50%) translateY(-20px); } }`;
-  document.head.appendChild(style);
+window.updateName = async function(id){
 
-  loadData();
+  const name =
+    document.getElementById(`name-${id}`).value;
+
+  await updateDoc(doc(db,"students",id),{
+    name:name
+  });
+
+  showToast('تم الحفظ');
+}
+
+window.updateField = async function(id,field,value){
+
+  await updateDoc(doc(db,"students",id),{
+    [field]: value
+  });
+}
+
+window.toggleInterview = async function(id,current){
+
+  const newValue =
+    current === 'done'
+    ? 'pending'
+    : 'done';
+
+  await updateDoc(doc(db,"students",id),{
+    interview:newValue
+  });
+}
+
+window.toggleAcceptance = async function(id,current,interview){
+
+  if(interview !== 'done'){
+    alert('يجب إجراء المقابلة أولاً');
+    return;
+  }
+
+  const order = ['na','accepted','rejected'];
+
+  const newStatus =
+    order[(order.indexOf(current)+1)%3];
+
+  await updateDoc(doc(db,"students",id),{
+    accepted:newStatus
+  });
+}
+
+window.deleteStudent = async function(id){
+
+  if(confirm('حذف الطالبة؟')){
+
+    await deleteDoc(doc(db,"students",id));
+
+    showToast('تم الحذف');
+  }
+}
+
+window.clearAll = async function(){
+
+  if(!confirm('حذف جميع البيانات؟')) return;
+
+  const snapshot =
+    await getDocs(collection(db,"students"));
+
+  for(const item of snapshot.docs){
+
+    await deleteDoc(doc(db,"students",item.id));
+  }
+
+  showToast('تم حذف الكل');
+}
+
+window.filterTable = function(){
+
+  const search =
+    document.getElementById('search')
+    .value
+    .toLowerCase();
+
+  const filtered =
+    students.filter(s=>
+      (s.name || '')
+      .toLowerCase()
+      .includes(search)
+    );
+
+  renderTable(filtered);
+}
+
 </script>
+
 </body>
 </html>
