@@ -4,8 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>جدول المقابلات والقبول - برنامج متين</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --primary: #1a3a5c;
@@ -22,10 +21,7 @@
     --danger-bg: #fdf0f0;
     --success: #1e7c52;
     --success-bg: #edfaf4;
-    --warning: #b45309;
-    --warning-bg: #fffbeb;
     --shadow: 0 2px 12px rgba(26,58,92,0.08);
-    --shadow-lg: 0 8px 32px rgba(26,58,92,0.14);
     --radius: 10px;
     --radius-lg: 16px;
   }
@@ -60,288 +56,81 @@
   }
 
   .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-icon { width: 40px; height: 40px; background: var(--accent); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+  .logo-text h1 { font-size: 17px; font-weight: 700; color: #fff; }
+  .logo-text span { font-size: 12px; color: rgba(255,255,255,0.6); }
 
-  .logo-icon {
-    width: 40px; height: 40px;
-    background: var(--accent);
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px;
-  }
-
-  .logo-text h1 { font-size: 17px; font-weight: 700; color: #fff; line-height: 1.2; }
-  .logo-text span { font-size: 12px; color: rgba(255,255,255,0.6); font-weight: 300; }
-
-  .header-actions { display: flex; gap: 10px; align-items: center; }
-
+  .header-actions { display: flex; gap: 10px; }
   .btn {
     display: inline-flex; align-items: center; gap: 7px;
     padding: 8px 18px; border-radius: var(--radius);
     font-family: 'Cairo', sans-serif; font-size: 13px; font-weight: 600;
-    cursor: pointer; transition: all 0.18s; border: none; text-decoration: none;
+    cursor: pointer; border: none;
   }
-
   .btn-primary { background: var(--accent); color: var(--primary); }
-  .btn-primary:hover { background: var(--accent-light); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(212,168,83,0.35); }
+  .btn-primary:hover { background: var(--accent-light); }
   .btn-outline { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.3); }
-  .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.6); }
+  .btn-outline:hover { background: rgba(255,255,255,0.1); }
   .btn-danger { background: var(--danger-bg); color: var(--danger); border: 1px solid #f5c6c6; }
   .btn-danger:hover { background: #f9dddd; }
   .btn-success { background: var(--success-bg); color: var(--success); border: 1px solid #a7e3c8; }
   .btn-success:hover { background: #d4f5e7; }
 
   .stats-bar { background: var(--primary-light); padding: 12px 2rem; }
-  .stats-inner {
-    max-width: 1300px; margin: 0 auto;
-    display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap;
-  }
-
+  .stats-inner { max-width: 1300px; margin: 0 auto; display: flex; gap: 1.5rem; flex-wrap: wrap; }
   .stat { display: flex; align-items: center; gap: 8px; color: rgba(255,255,255,0.85); font-size: 13px; }
-  .stat strong { color: var(--accent-light); font-size: 18px; font-weight: 700; }
+  .stat strong { color: var(--accent-light); font-size: 18px; }
 
   main { max-width: 1300px; margin: 0 auto; padding: 2rem; }
-
-  .controls {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 1.5rem; flex-wrap: wrap; gap: 12px;
-  }
-
+  .controls { display: flex; justify-content: space-between; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 12px; }
   .search-box { position: relative; flex: 1; max-width: 320px; }
-  .search-box svg { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted); width: 16px; height: 16px; }
-  .search-box input {
-    width: 100%; padding: 9px 38px 9px 14px;
-    border: 1.5px solid var(--border); border-radius: var(--radius);
-    font-family: 'Cairo', sans-serif; font-size: 13px;
-    background: var(--surface); color: var(--text); transition: border 0.15s;
-  }
-  .search-box input:focus { outline: none; border-color: var(--primary-light); box-shadow: 0 0 0 3px rgba(37,87,167,0.1); }
+  .search-box input { width: 100%; padding: 9px 14px 9px 38px; border: 1.5px solid var(--border); border-radius: var(--radius); font-family: 'Cairo', sans-serif; }
+  .filter-group { display: flex; gap: 8px; flex-wrap: wrap; }
+  .filter-group select { padding: 8px 14px; border: 1.5px solid var(--border); border-radius: var(--radius); font-family: 'Cairo', sans-serif; background: white; cursor: pointer; }
 
-  .filter-group { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-  .filter-group select {
-    padding: 8px 14px; border: 1.5px solid var(--border); border-radius: var(--radius);
-    font-family: 'Cairo', sans-serif; font-size: 13px;
-    background: var(--surface); color: var(--text); cursor: pointer;
-  }
-  .filter-group select:focus { outline: none; border-color: var(--primary-light); }
-
-  .table-card {
-    background: var(--surface); border-radius: var(--radius-lg);
-    box-shadow: var(--shadow); overflow: hidden; border: 1px solid var(--border);
-  }
-
+  .table-card { background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow); overflow: hidden; border: 1px solid var(--border); }
   .table-wrapper { overflow-x: auto; }
-
   table { width: 100%; border-collapse: collapse; min-width: 900px; }
-
   thead { background: var(--primary); }
-
-  thead th {
-    color: rgba(255,255,255,0.9); font-size: 12px; font-weight: 600;
-    padding: 13px 12px; text-align: center; letter-spacing: 0.3px;
-    white-space: nowrap; border-bottom: none;
-  }
-
-  thead th.name-th { text-align: right; min-width: 200px; }
-  thead th.num-th { width: 45px; }
-  thead th.day-th { width: 120px; }
-  thead th.time-th { width: 110px; }
-  thead th.interview-th { width: 120px; }
-  thead th.accepted-th { width: 120px; }
-  thead th.del-th { width: 55px; }
-
-  tbody tr {
-    border-bottom: 1px solid var(--border);
-    transition: background 0.12s;
-    animation: fadeIn 0.25s ease forwards;
-  }
-
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
-
+  thead th { color: white; padding: 13px 12px; text-align: center; font-size: 12px; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.12s; }
   tbody tr:hover { background: #f8f9fd; }
-  tbody tr:last-child { border-bottom: none; }
+  tbody td { padding: 8px 12px; text-align: center; font-size: 13.5px; }
 
-  tbody td { padding: 8px 12px; font-size: 13.5px; color: var(--text); vertical-align: middle; text-align: center; }
-  tbody td.name-td { text-align: right; }
+  .name-cell { display: flex; gap: 6px; align-items: center; }
+  .name-cell input { flex: 1; padding: 6px 8px; border: 1.5px solid transparent; border-radius: 6px; font-family: 'Cairo', sans-serif; font-size: 13.5px; background: transparent; }
+  .name-cell input:focus { outline: none; border-color: var(--primary-light); background: white; }
+  .save-name-btn { background: none; border: none; cursor: pointer; color: var(--success); font-size: 16px; padding: 4px 8px; border-radius: 6px; }
+  .save-name-btn:hover { background: var(--success-bg); }
 
-  .row-num { text-align: center; font-size: 12px; color: var(--text-muted); font-weight: 500; }
-
-  .name-cell {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .name-cell input {
-    flex: 1;
-    background: transparent;
-    border: none;
-    font-family: 'Cairo', sans-serif;
-    font-size: 13.5px;
-    color: var(--text);
-    font-weight: 500;
-    padding: 4px 6px;
-    border-radius: 6px;
-    transition: background 0.15s, border 0.15s;
-    border: 1.5px solid transparent;
-  }
-  .name-cell input:hover { background: var(--surface2); }
-  .name-cell input:focus { outline: none; background: var(--surface); border-color: var(--primary-light); box-shadow: 0 0 0 3px rgba(37,87,167,0.08); }
-  .name-cell input::placeholder { color: #b0bac9; font-weight: 400; }
-  .save-name-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--success);
-    font-size: 14px;
-    padding: 4px;
-    border-radius: 6px;
-    opacity: 0.6;
-    transition: all 0.15s;
-  }
-  .save-name-btn:hover {
-    opacity: 1;
-    background: var(--success-bg);
-  }
-
-  .day-select, .time-input {
-    width: 100%; padding: 6px 8px;
-    border: 1.5px solid transparent; border-radius: 6px;
-    font-family: 'Cairo', sans-serif; font-size: 12.5px; color: var(--text);
-    background: transparent; transition: all 0.15s; cursor: pointer; text-align: center;
-  }
+  .day-select, .time-input { width: 100%; padding: 6px 8px; border: 1.5px solid transparent; border-radius: 6px; font-family: 'Cairo', sans-serif; text-align: center; background: transparent; cursor: pointer; }
   .day-select:hover, .time-input:hover { background: var(--surface2); }
-  .day-select:focus, .time-input:focus { outline: none; border-color: var(--primary-light); background: var(--surface); box-shadow: 0 0 0 3px rgba(37,87,167,0.08); }
+  .day-select:focus, .time-input:focus { outline: none; border-color: var(--primary-light); background: white; }
 
-  .toggle-btn {
-    display: inline-flex; align-items: center; justify-content: center; gap: 5px;
-    padding: 5px 12px; border-radius: 20px; border: none; cursor: pointer;
-    font-family: 'Cairo', sans-serif; font-size: 12px; font-weight: 600;
-    transition: all 0.18s; white-space: nowrap;
-  }
+  .toggle-btn { padding: 5px 12px; border-radius: 20px; border: none; cursor: pointer; font-family: 'Cairo', sans-serif; font-size: 12px; font-weight: 600; transition: all 0.18s; }
+  .toggle-btn.pending { background: var(--surface2); color: var(--text-muted); border: 1.5px solid var(--border); }
+  .toggle-btn.done { background: var(--success-bg); color: var(--success); border: 1.5px solid #a7e3c8; }
+  .toggle-btn.accepted { background: #e8f4ff; color: var(--primary-light); border: 1.5px solid #b3d4f5; }
+  .toggle-btn.rejected { background: var(--danger-bg); color: var(--danger); border: 1.5px solid #f5c6c6; }
+  .toggle-btn.na { background: #f5f5f5; color: #b0bac9; border: 1.5px solid #e0e0e0; }
 
-  .toggle-btn.pending {
-    background: var(--surface2); color: var(--text-muted);
-    border: 1.5px solid var(--border);
-  }
-  .toggle-btn.pending:hover { background: #e2e8f5; border-color: #aab4cc; }
-
-  .toggle-btn.done {
-    background: var(--success-bg); color: var(--success);
-    border: 1.5px solid #a7e3c8;
-  }
-  .toggle-btn.done:hover { background: #d4f5e7; }
-
-  .toggle-btn.accepted {
-    background: #e8f4ff; color: var(--primary-light);
-    border: 1.5px solid #b3d4f5;
-  }
-  .toggle-btn.accepted:hover { background: #d0e9ff; }
-
-  .toggle-btn.rejected {
-    background: var(--danger-bg); color: var(--danger);
-    border: 1.5px solid #f5c6c6;
-  }
-  .toggle-btn.rejected:hover { background: #f9dddd; }
-
-  .toggle-btn.na {
-    background: #f5f5f5; color: #b0bac9;
-    border: 1.5px solid #e0e0e0;
-    font-style: italic;
-  }
-
-  .del-btn {
-    display: flex; align-items: center; justify-content: center;
-    width: 30px; height: 30px; border-radius: 8px;
-    background: none; border: none; cursor: pointer;
-    color: #b0bac9; margin: 0 auto; transition: all 0.15s;
-  }
+  .del-btn { background: none; border: none; cursor: pointer; color: #b0bac9; padding: 5px; border-radius: 8px; transition: all 0.15s; }
   .del-btn:hover { background: var(--danger-bg); color: var(--danger); }
 
-  .table-footer {
-    background: var(--surface2); padding: 12px 20px;
-    display: flex; align-items: center; justify-content: space-between;
-    border-top: 1px solid var(--border); font-size: 12.5px; color: var(--text-muted);
-    flex-wrap: wrap; gap: 8px;
-  }
-
-  .add-row-btn {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: none; border: 1.5px dashed var(--border);
-    border-radius: var(--radius); padding: 7px 16px;
-    font-family: 'Cairo', sans-serif; font-size: 13px; color: var(--text-muted);
-    cursor: pointer; transition: all 0.15s; width: 100%; margin-top: 1px; justify-content: center;
-  }
+  .add-row-btn { width: 100%; padding: 10px; margin-top: 10px; background: none; border: 1.5px dashed var(--border); border-radius: var(--radius); cursor: pointer; font-family: 'Cairo', sans-serif; font-size: 13px; color: var(--text-muted); }
   .add-row-btn:hover { border-color: var(--primary-light); color: var(--primary-light); background: #f0f5ff; }
 
-  .bulk-add-panel {
-    background: var(--surface2);
-    border-radius: var(--radius);
-    padding: 15px;
-    margin-bottom: 20px;
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
-    flex-wrap: wrap;
-  }
-  .bulk-add-panel textarea {
-    flex: 1;
-    padding: 10px;
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius);
-    font-family: 'Cairo', sans-serif;
-    font-size: 13px;
-    resize: vertical;
-    min-height: 80px;
-  }
-  .bulk-add-panel textarea:focus {
-    outline: none;
-    border-color: var(--primary-light);
-  }
+  .bulk-add-panel { background: var(--surface2); border-radius: var(--radius); padding: 15px; margin-bottom: 20px; display: flex; gap: 10px; align-items: flex-start; flex-wrap: wrap; }
+  .bulk-add-panel textarea { flex: 1; padding: 10px; border: 1.5px solid var(--border); border-radius: var(--radius); font-family: 'Cairo', sans-serif; font-size: 13px; min-height: 80px; resize: vertical; }
+  .bulk-add-panel textarea:focus { outline: none; border-color: var(--primary-light); }
 
-  .modal-overlay {
-    display: none; position: fixed; inset: 0;
-    background: rgba(26,58,92,0.45); z-index: 200;
-    align-items: center; justify-content: center; padding: 1rem;
-  }
-  .modal-overlay.open { display: flex; }
+  .table-footer { background: var(--surface2); padding: 12px 20px; display: flex; justify-content: space-between; border-top: 1px solid var(--border); font-size: 12.5px; color: var(--text-muted); flex-wrap: wrap; }
 
-  .modal {
-    background: var(--surface); border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-lg); padding: 2rem; width: 100%; max-width: 420px;
-    text-align: center; animation: popIn 0.2s ease;
-  }
-  @keyframes popIn { from { opacity: 0; transform: scale(0.93); } to { opacity: 1; transform: scale(1); } }
-
-  .modal h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
-  .modal p { font-size: 13.5px; color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.7; }
-  .modal-actions { display: flex; gap: 10px; justify-content: center; }
-
-  .toast {
-    position: fixed; bottom: 2rem; left: 50%;
-    transform: translateX(-50%) translateY(20px);
-    background: var(--primary); color: #fff;
-    padding: 11px 22px; border-radius: var(--radius);
-    font-size: 13px; box-shadow: var(--shadow-lg);
-    opacity: 0; transition: all 0.3s; z-index: 300;
-    pointer-events: none; white-space: nowrap;
-  }
+  .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--primary); color: white; padding: 11px 22px; border-radius: var(--radius); font-size: 13px; opacity: 0; transition: 0.3s; pointer-events: none; z-index: 300; }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-  @media print {
-    header, .stats-bar, .controls, .table-footer, .add-row-btn, .bulk-add-panel { display: none !important; }
-    main { padding: 0; }
-    .table-card { box-shadow: none; border: 1px solid #ccc; }
-    input, select { border: none !important; }
-    body { background: white; }
-  }
-
-  @media (max-width: 640px) {
-    main { padding: 1rem; }
-    .header-inner { padding: 0 1rem; }
-    .logo-text span { display: none; }
-    .stats-inner { gap: 1rem; flex-wrap: wrap; }
-    .controls { flex-direction: column; align-items: stretch; }
-    .search-box { max-width: 100%; }
-  }
+  @media print { header, .stats-bar, .controls, .table-footer, .add-row-btn, .bulk-add-panel, .del-btn { display: none !important; } }
+  @media (max-width: 640px) { main { padding: 1rem; } .header-inner { padding: 0 1rem; } .controls { flex-direction: column; } .search-box { max-width: 100%; } }
 </style>
 </head>
 <body>
@@ -350,10 +139,7 @@
   <div class="header-inner">
     <div class="logo">
       <div class="logo-icon">📖</div>
-      <div class="logo-text">
-        <h1>برنامج متين 2</h1>
-        <span>التسجيل والقبول - حفظ تلقائي للأسماء</span>
-      </div>
+      <div class="logo-text"><h1>برنامج متين 2</h1><span>حفظ تلقائي للأسماء</span></div>
     </div>
     <div class="header-actions">
       <button class="btn btn-outline" onclick="window.print()">🖨️ طباعة</button>
@@ -367,265 +153,140 @@
   <div class="stats-inner">
     <div class="stat"><strong id="stat-total">0</strong><span>إجمالي الطالبات</span></div>
     <div class="stat"><strong id="stat-interviewed">0</strong><span>أُجريت مقابلتها</span></div>
-    <div class="stat"><strong id="stat-not-interviewed">0</strong><span>لم تُجرَ مقابلتها</span></div>
+    <div class="stat"><strong id="stat-not-interviewed">0</strong><span>لم تُجرَ</span></div>
     <div class="stat"><strong id="stat-accepted">0</strong><span>مقبولة</span></div>
     <div class="stat"><strong id="stat-rejected">0</strong><span>غير مقبولة</span></div>
   </div>
 </div>
 
 <main>
-  <!-- لوحة إضافة أسماء متعددة دفعة واحدة -->
   <div class="bulk-add-panel">
-    <textarea id="bulk-names" placeholder="أدخلي الأسماء هنا، كل اسم في سطر منفصل&#10;مثال:&#10;أسماء محمد أحمد&#10;نور علي حسن&#10;فاطمة محمود"></textarea>
-    <button class="btn btn-success" onclick="addBulkNames()" style="white-space: nowrap;">➕ إضافة الكل</button>
+    <textarea id="bulk-names" placeholder="📝 أدخلي الأسماء هنا، كل اسم في سطر منفصل&#10;مثال:&#10;أسماء محمد أحمد&#10;نور علي حسن&#10;فاطمة محمود"></textarea>
+    <button class="btn btn-success" onclick="addBulkNames()">➕ إضافة الكل</button>
   </div>
 
   <div class="controls">
     <div class="search-box">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-      </svg>
-      <input type="text" placeholder="ابحثي عن طالبة..." id="search-input" oninput="filterTable()">
+      <input type="text" id="search-input" placeholder="🔍 ابحثي عن طالبة..." oninput="filterTable()">
     </div>
     <div class="filter-group">
       <select id="day-filter" onchange="filterTable()">
-        <option value="">كل الأيام</option>
+        <option value="">📅 كل الأيام</option>
         <option>الأحد</option><option>الاثنين</option><option>الثلاثاء</option>
         <option>الأربعاء</option><option>الخميس</option><option>الجمعة</option><option>السبت</option>
       </select>
       <select id="interview-filter" onchange="filterTable()">
-        <option value="">كل المقابلات</option>
-        <option value="done">أُجريت المقابلة</option>
-        <option value="pending">لم تُجرَ بعد</option>
+        <option value="">🎙️ كل المقابلات</option>
+        <option value="done">✅ تمت</option>
+        <option value="pending">⏳ لم تتم</option>
       </select>
       <select id="accepted-filter" onchange="filterTable()">
-        <option value="">كل نتائج القبول</option>
-        <option value="accepted">مقبولة</option>
-        <option value="rejected">غير مقبولة</option>
-        <option value="na">لم يُحدَّد</option>
+        <option value="">📊 كل النتائج</option>
+        <option value="accepted">🎉 مقبولة</option>
+        <option value="rejected">❌ غير مقبولة</option>
+        <option value="na">⏸️ لم يحدد</option>
       </select>
-      <button class="btn btn-danger" onclick="confirmClearAll()">🗑️ مسح الكل</button>
+      <button class="btn btn-danger" onclick="clearAllData()">🗑️ مسح الكل</button>
     </div>
   </div>
 
   <div class="table-card">
     <div class="table-wrapper">
-      <table id="main-table">
+      <table>
         <thead>
-          <tr>
-            <th class="num-th">#</th>
-            <th class="name-th">اسم الطالبة</th>
-            <th class="day-th">اليوم</th>
-            <th class="time-th">الساعة</th>
-            <th class="interview-th">تمت المقابلة؟</th>
-            <th class="accepted-th">القبول</th>
-            <th class="del-th">حذف</th>
-          </tr>
+          <tr><th>#</th><th>اسم الطالبة</th><th>اليوم</th><th>الساعة</th><th>المقابلة</th><th>القبول</th><th></th></tr>
         </thead>
         <tbody id="tbody"></tbody>
-      </table>
+       </table>
     </div>
     <button class="add-row-btn" onclick="addRow()">+ إضافة طالبة جديدة</button>
     <div class="table-footer">
       <span id="footer-info">جاري التحميل...</span>
-      <span>آخر تحديث: <span id="last-updated">—</span></span>
+      <span>💾 يتم الحفظ تلقائياً في المتصفح</span>
     </div>
   </div>
 </main>
 
-<div class="modal-overlay" id="clear-modal">
-  <div class="modal">
-    <h3>⚠️ تأكيد المسح</h3>
-    <p>هل أنتِ متأكدة من مسح جميع بيانات المواعيد والمقابلات؟<br>لن يتم حذف أسماء الطالبات.</p>
-    <div class="modal-actions">
-      <button class="btn btn-danger" onclick="clearAllSchedules()">نعم، امسحي البيانات</button>
-      <button class="btn btn-outline" style="color:var(--text);border-color:var(--border);" onclick="closeModal()">إلغاء</button>
-    </div>
-  </div>
-</div>
-
 <div class="toast" id="toast"></div>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import {
-    getFirestore,
-    collection,
-    getDocs,
-    addDoc,
-    updateDoc,
-    deleteDoc,
-    doc,
-    onSnapshot
-  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyBLQfHXY_lW1cA6AYlQdpHxh8f16P5uy2I",
-    authDomain: "mateen-table.firebaseapp.com",
-    projectId: "mateen-table",
-    storageBucket: "mateen-table.firebasestorage.app",
-    messagingSenderId: "487838797731",
-    appId: "1:487838797731:web:5684b1b82ba31fa08a1416"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  const DAYS = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
-  const INITIAL_NAMES = [
-    'سمية بنت باسم','سفانة بنت ماهر','رحمة أحمد توفيق','سهام بنت سرحان بن هليل المطرفي',
-    'فاطمة بنت محمد بن إبراهيم توفيق','أمينة أحمد يوسف','أميرة بشير سلطان خلف',
-    'عبير بشير سلطان خلف','زينب راجي لغالي','هبة سليك','حصة بنت لافي الثبيتي',
-    'روضة موسى صالح','عائشة أحمد أمان','آسيا بنت صباح بن علي','شروق علي الشهري',
-    'عفاف محمد أحمد عبدالرحمن','ناهد عبدالعزيز عبدالفتاح','هاجر نجار حامد', 
-    'حياة عبدالواسع عبدالقادر جابر','فاطمة احمد المالكي','حنان الشهراني','شيماء نيازي'
+<script>
+  const STORAGE_KEY = 'mateen_students_data';
+  const DAYS = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+  
+  const DEFAULT_NAMES = [
+    'سمية بنت باسم', 'سفانة بنت ماهر', 'رحمة أحمد توفيق', 'سهام بنت سرحان المطرفي',
+    'فاطمة بنت محمد توفيق', 'أمينة أحمد يوسف', 'أميرة بشير سلطان', 'عبير بشير سلطان',
+    'زينب راجي لغالي', 'هبة سليك', 'حصة بنت لافي الثبيتي', 'روضة موسى صالح',
+    'عائشة أحمد أمان', 'آسيا بنت صباح بن علي', 'شروق علي الشهري', 'عفاف محمد أحمد',
+    'ناهد عبدالعزيز عبدالفتاح', 'هاجر نجار حامد', 'حياة عبدالواسع جابر', 
+    'فاطمة احمد المالكي', 'حنان الشهراني', 'شيماء نيازي'
   ];
 
-  let rows = [];
+  let students = [];
 
-  async function loadData() {
-    const snap = await getDocs(collection(db, 'students'));
-    rows = [];
-    snap.forEach((d) => {
-      rows.push({
-        firebaseId: d.id,
-        ...d.data()
-      });
-    });
-
-    if (rows.length === 0) {
-      for (const n of INITIAL_NAMES) {
-        const obj = {
-          name: n.trim(),
-          day: '',
-          time: '',
-          interview: 'pending',
-          accepted: 'na'
-        };
-        const ref = await addDoc(collection(db, 'students'), obj);
-        rows.push({ firebaseId: ref.id, ...obj });
-      }
+  function loadData() {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      students = JSON.parse(saved);
+    } else {
+      students = DEFAULT_NAMES.map(name => ({
+        id: Date.now() + Math.random() + name,
+        name: name,
+        day: '',
+        time: '',
+        interview: 'pending',
+        accepted: 'na'
+      }));
+      saveData();
     }
     renderTable();
     updateStats();
   }
 
-  function updateLastUpdated() {
-    const now = new Date();
-    document.getElementById('last-updated').textContent = now.toLocaleTimeString('ar-SA', {hour:'2-digit', minute:'2-digit'});
+  function saveData() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(students));
   }
 
   function updateStats() {
-    const named = rows.filter(r => r.name && r.name.trim());
-    document.getElementById('stat-total').textContent = named.length;
-    document.getElementById('stat-interviewed').textContent = named.filter(r => r.interview === 'done').length;
-    document.getElementById('stat-not-interviewed').textContent = named.filter(r => r.interview === 'pending').length;
-    document.getElementById('stat-accepted').textContent = named.filter(r => r.accepted === 'accepted').length;
-    document.getElementById('stat-rejected').textContent = named.filter(r => r.accepted === 'rejected').length;
+    const valid = students.filter(s => s.name && s.name.trim());
+    document.getElementById('stat-total').textContent = valid.length;
+    document.getElementById('stat-interviewed').textContent = students.filter(s => s.interview === 'done').length;
+    document.getElementById('stat-not-interviewed').textContent = students.filter(s => s.interview === 'pending').length;
+    document.getElementById('stat-accepted').textContent = students.filter(s => s.accepted === 'accepted').length;
+    document.getElementById('stat-rejected').textContent = students.filter(s => s.accepted === 'rejected').length;
   }
 
-  function interviewLabel(val) {
-    return val === 'done' ? { cls: 'done', icon: '✅', text: 'تمت' } : { cls: 'pending', icon: '⏳', text: 'لم تُجرَ' };
-  }
-
-  function acceptedLabel(val) {
-    if (val === 'accepted') return { cls: 'accepted', icon: '✔️', text: 'مقبولة' };
-    if (val === 'rejected') return { cls: 'rejected', icon: '✖️', text: 'غير مقبولة' };
-    return { cls: 'na', icon: '—', text: 'لم يُحدَّد' };
-  }
-
-  window.cycleInterview = function(idx) {
-    rows[idx].interview = rows[idx].interview === 'pending' ? 'done' : 'pending';
-    if (rows[idx].interview === 'pending') rows[idx].accepted = 'na';
-    updateDoc(doc(db, 'students', rows[idx].firebaseId), { interview: rows[idx].interview, accepted: rows[idx].accepted });
-    filterTable();
-    showToast(rows[idx].interview === 'done' ? '✅ تم تسجيل إجراء المقابلة' : '⏳ تم إلغاء تسجيل المقابلة');
-  }
-
-  window.cycleAccepted = function(idx) {
-    const order = ['na', 'accepted', 'rejected'];
-    const cur = order.indexOf(rows[idx].accepted);
-    rows[idx].accepted = order[(cur + 1) % order.length];
-    updateDoc(doc(db, 'students', rows[idx].firebaseId), { accepted: rows[idx].accepted });
-    filterTable();
-    const msg = rows[idx].accepted === 'accepted' ? '🎉 تم تسجيل القبول' :
-                rows[idx].accepted === 'rejected' ? '❌ تم تسجيل عدم القبول' : '↩️ تم إعادة ضبط حالة القبول';
-    showToast(msg);
-  }
-
-  window.updateName = async function(idx, value) {
-    if (!value.trim()) {
-      showToast('⚠️ الرجاء إدخال اسم صحيح');
-      return false;
+  function updateStudent(id, field, value) {
+    const student = students.find(s => s.id == id);
+    if (student) {
+      student[field] = value;
+      if (field === 'interview' && value === 'pending') {
+        student.accepted = 'na';
+      }
+      saveData();
+      filterTable();
+      showToast(field === 'name' ? '💾 تم حفظ الاسم' : field === 'day' ? '📅 تم تحديث اليوم' : '⏰ تم تحديث الوقت');
     }
-    rows[idx].name = value.trim();
-    await updateDoc(doc(db, 'students', rows[idx].firebaseId), { name: rows[idx].name });
+  }
+
+  function deleteStudent(id) {
+    students = students.filter(s => s.id != id);
+    saveData();
     filterTable();
-    showToast('💾 تم حفظ الاسم: ' + rows[idx].name);
-    return true;
+    showToast('🗑️ تم حذف الطالبة');
   }
 
-  function renderTable(filtered) {
-    const tbody = document.getElementById('tbody');
-    const data = filtered !== undefined ? filtered : rows;
-    tbody.innerHTML = '';
-    data.forEach((row, visIdx) => {
-      const realIdx = rows.findIndex(r => r.firebaseId === row.firebaseId);
-      const tr = document.createElement('tr');
-      const iv = interviewLabel(row.interview);
-      const ac = acceptedLabel(row.accepted);
-      const acDisabled = row.interview !== 'done' ? 'style="opacity:0.35;pointer-events:none;cursor:default;"' : '';
-      tr.innerHTML = `
-        <td class="row-num">${visIdx + 1}</td>
-        <td class="name-td">
-          <div class="name-cell">
-            <input type="text" value="${escapeHtml(row.name || '')}" placeholder="اكتبي اسم الطالبة..." id="name-input-${realIdx}" onkeypress="if(event.key==='Enter'){updateName(${realIdx}, this.value)}">
-            <button class="save-name-btn" onclick="updateName(${realIdx}, document.getElementById('name-input-${realIdx}').value)" title="حفظ الاسم">💾</button>
-          </div>
-        </td>
-        <td>
-          <select class="day-select" data-idx="${realIdx}" onchange="updateRow(${realIdx},'day',this.value)">
-            <option value="">-- اليوم --</option>
-            ${DAYS.map(d => `<option value="${d}" ${row.day===d?'selected':''}>${d}</option>`).join('')}
-          </select>
-        </td>
-        <td>
-          <input type="text" class="time-input" value="${escapeHtml(row.time || '')}" placeholder="10:00 ص" data-idx="${realIdx}" onchange="updateRow(${realIdx},'time',this.value)">
-        </td>
-        <td>
-          <button class="toggle-btn ${iv.cls}" onclick="cycleInterview(${realIdx})" title="اضغطي للتغيير">
-            ${iv.icon} ${iv.text}
-          </button>
-        </td>
-        <td>
-          <button class="toggle-btn ${ac.cls}" onclick="cycleAccepted(${realIdx})" ${acDisabled} title="${row.interview !== 'done' ? 'أجري المقابلة أولاً' : 'اضغطي للتغيير'}">
-            ${ac.icon} ${ac.text}
-          </button>
-        </td>
-        <td>
-          <button class="del-btn" onclick="deleteRow('${row.firebaseId}')" title="حذف الصف">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/>
-            </svg>
-          </button>
-        </td>
-      `;
-      tbody.appendChild(tr);
-    });
-    const footerInfo = document.getElementById('footer-info');
-    footerInfo.textContent = filtered !== undefined ? `تعرض ${data.length} من ${rows.length} سجل` : `إجمالي السجلات: ${rows.length} | اضغطي على أي خانة للتعديل`;
-  }
-
-  window.updateRow = async function(idx, field, value) {
-    rows[idx][field] = value;
-    await updateDoc(doc(db, 'students', rows[idx].firebaseId), { [field]: value });
-    showToast(field === 'day' ? '📅 تم تحديث اليوم' : '⏰ تم تحديث الوقت');
-  }
-
-  window.addRow = async function() {
-    const obj = { name: '', day: '', time: '', interview: 'pending', accepted: 'na' };
-    const ref = await addDoc(collection(db, 'students'), obj);
-    rows.push({ firebaseId: ref.id, ...obj });
+  function addRow() {
+    const newStudent = {
+      id: Date.now() + Math.random(),
+      name: '',
+      day: '',
+      time: '',
+      interview: 'pending',
+      accepted: 'na'
+    };
+    students.push(newStudent);
+    saveData();
     filterTable();
     setTimeout(() => {
       const inputs = document.querySelectorAll('tbody tr:last-child .name-cell input');
@@ -634,106 +295,147 @@
     showToast('✅ تمت إضافة سطر جديد');
   }
 
-  window.addBulkNames = async function() {
+  function addBulkNames() {
     const textarea = document.getElementById('bulk-names');
-    const namesText = textarea.value;
-    if (!namesText.trim()) {
+    const text = textarea.value;
+    if (!text.trim()) {
       showToast('⚠️ الرجاء إدخال الأسماء أولاً');
       return;
     }
-    const names = namesText.split('\n').filter(n => n.trim().length > 0);
+    const names = text.split('\n').filter(n => n.trim().length > 0);
     let added = 0;
     for (const name of names) {
-      const obj = { name: name.trim(), day: '', time: '', interview: 'pending', accepted: 'na' };
-      const ref = await addDoc(collection(db, 'students'), obj);
-      rows.push({ firebaseId: ref.id, ...obj });
+      students.push({
+        id: Date.now() + Math.random() + name,
+        name: name.trim(),
+        day: '',
+        time: '',
+        interview: 'pending',
+        accepted: 'na'
+      });
       added++;
     }
-    textarea.value = '';
+    saveData();
     filterTable();
+    textarea.value = '';
     showToast(`✅ تمت إضافة ${added} اسم جديد`);
   }
 
-  window.deleteRow = async function(id) {
-    const row = rows.find(r => r.firebaseId === id);
-    if (row?.firebaseId) await deleteDoc(doc(db, 'students', row.firebaseId));
-    rows = rows.filter(r => r.firebaseId !== id);
-    filterTable();
-    showToast('🗑️ تم حذف الصف');
+  function clearAllData() {
+    if (confirm('⚠️ هل أنت متأكدة من مسح جميع البيانات؟ لا يمكن التراجع.')) {
+      students = [];
+      saveData();
+      renderTable();
+      updateStats();
+      showToast('🗑️ تم مسح جميع البيانات');
+    }
   }
 
-  window.filterTable = function() {
+  function renderTable(filteredList) {
+    const tbody = document.getElementById('tbody');
+    const data = filteredList || students;
+    tbody.innerHTML = '';
+    
+    data.forEach((student, idx) => {
+      const ivClass = student.interview === 'done' ? 'done' : 'pending';
+      const ivText = student.interview === 'done' ? '✅ تمت' : '⏳ لم تُجرَ';
+      
+      let acClass = 'na', acText = '— لم يُحدَّد';
+      if (student.accepted === 'accepted') { acClass = 'accepted'; acText = '✔️ مقبولة'; }
+      else if (student.accepted === 'rejected') { acClass = 'rejected'; acText = '✖️ غير مقبولة'; }
+      
+      const acDisabled = student.interview !== 'done' ? 'disabled style="opacity:0.5"' : '';
+      
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${idx + 1}</td>
+        <td class="name-td">
+          <div class="name-cell">
+            <input type="text" value="${escapeHtml(student.name)}" placeholder="اكتبي اسم الطالبة..." id="name-${student.id}" onkeypress="if(event.key==='Enter'){updateStudent('${student.id}','name',this.value)}">
+            <button class="save-name-btn" onclick="updateStudent('${student.id}','name',document.getElementById('name-${student.id}').value)">💾</button>
+          </div>
+        </td>
+        <td>
+          <select class="day-select" onchange="updateStudent('${student.id}','day',this.value)">
+            <option value="">-- اليوم --</option>
+            ${DAYS.map(d => `<option value="${d}" ${student.day === d ? 'selected' : ''}>${d}</option>`).join('')}
+          </select>
+        </td>
+        <td>
+          <input type="text" class="time-input" value="${escapeHtml(student.time)}" placeholder="10:00 ص" onchange="updateStudent('${student.id}','time',this.value)">
+        </td>
+        <td>
+          <button class="toggle-btn ${ivClass}" onclick="updateStudent('${student.id}','interview', student.interview === 'pending' ? 'done' : 'pending')">
+            ${ivText}
+          </button>
+        </td>
+        <td>
+          <button class="toggle-btn ${acClass}" onclick="if(student.interview==='done'){ const order=['na','accepted','rejected']; const cur=order.indexOf(student.accepted); updateStudent('${student.id}','accepted',order[(cur+1)%3]); }" ${acDisabled}>
+            ${acText}
+          </button>
+        </td>
+        <td>
+          <button class="del-btn" onclick="deleteStudent('${student.id}')" title="حذف">🗑️</button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+    
+    document.getElementById('footer-info').textContent = filteredList ? `تعرض ${data.length} من ${students.length} سجل` : `إجمالي السجلات: ${students.length}`;
+  }
+
+  function filterTable() {
     const search = document.getElementById('search-input').value.trim().toLowerCase();
-    const dayF = document.getElementById('day-filter').value;
-    const ivF = document.getElementById('interview-filter').value;
-    const acF = document.getElementById('accepted-filter').value;
-    let filtered = rows.filter(r => {
-      const nameMatch = !search || (r.name || '').toLowerCase().includes(search);
-      const dayMatch = !dayF || r.day === dayF;
-      const ivMatch = !ivF || r.interview === ivF;
-      const acMatch = !acF || r.accepted === acF;
-      return nameMatch && dayMatch && ivMatch && acMatch;
+    const dayFilter = document.getElementById('day-filter').value;
+    const interviewFilter = document.getElementById('interview-filter').value;
+    const acceptedFilter = document.getElementById('accepted-filter').value;
+    
+    const filtered = students.filter(s => {
+      const matchSearch = !search || (s.name || '').toLowerCase().includes(search);
+      const matchDay = !dayFilter || s.day === dayFilter;
+      const matchInterview = !interviewFilter || s.interview === interviewFilter;
+      const matchAccepted = !acceptedFilter || s.accepted === acceptedFilter;
+      return matchSearch && matchDay && matchInterview && matchAccepted;
     });
     renderTable(filtered);
   }
 
-  window.confirmClearAll = function() { document.getElementById('clear-modal').classList.add('open'); }
-  window.closeModal = function() { document.getElementById('clear-modal').classList.remove('open'); }
-
-  window.clearAllSchedules = function() {
-    rows.forEach(async (r) => {
-      r.day = ''; r.time = ''; r.interview = 'pending'; r.accepted = 'na';
-      await updateDoc(doc(db, 'students', r.firebaseId), { day: '', time: '', interview: 'pending', accepted: 'na' });
+  function exportCSV() {
+    const headers = ['الرقم', 'اسم الطالبة', 'اليوم', 'الساعة', 'تمت المقابلة', 'القبول'];
+    const rows = [headers.join(',')];
+    students.forEach((s, i) => {
+      const ivLabel = s.interview === 'done' ? 'تمت' : 'لم تُجرَ';
+      const acLabel = s.accepted === 'accepted' ? 'مقبولة' : s.accepted === 'rejected' ? 'غير مقبولة' : 'لم يُحدَّد';
+      rows.push([i+1, `"${s.name || ''}"`, s.day || '', s.time || '', ivLabel, acLabel].join(','));
     });
-    filterTable();
-    closeModal();
-    showToast('🗑️ تم مسح جميع البيانات');
-  }
-
-  window.exportCSV = function() {
-    const headers = ['الرقم','اسم الطالبة','اليوم','الساعة','تمت المقابلة','القبول'];
-    const csvRows = [headers.join(',')];
-    rows.forEach((r, i) => {
-      const ivLabel = r.interview === 'done' ? 'تمت' : 'لم تُجرَ';
-      const acLabel = r.accepted === 'accepted' ? 'مقبولة' : r.accepted === 'rejected' ? 'غير مقبولة' : 'لم يُحدَّد';
-      csvRows.push([i+1, `"${r.name || ''}"`, r.day || '', r.time || '', ivLabel, acLabel].join(','));
-    });
-    const blob = new Blob(['\uFEFF' + csvRows.join('\n')], {type:'text/csv;charset=utf-8;'});
+    const blob = new Blob(['\uFEFF' + rows.join('\n')], {type: 'text/csv;charset=utf-8'});
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url; a.download = 'جدول_متين_المقابلات.csv'; a.click();
+    a.href = url; a.download = 'جدول_متين.csv'; a.click();
     URL.revokeObjectURL(url);
-    showToast('⬇️ تم تصدير الجدول بنجاح');
+    showToast('⬇️ تم تصدير الجدول');
   }
 
-  function escapeHtml(str) {
-    if (!str) return '';
-    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  }
-
+  function escapeHtml(str) { return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  
   let toastTimer;
   function showToast(msg) {
     const t = document.getElementById('toast');
     t.textContent = msg;
     t.classList.add('show');
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 2000);
   }
 
-  document.getElementById('clear-modal').addEventListener('click', function(e) {
-    if (e.target === this) closeModal();
-  });
+  window.updateStudent = updateStudent;
+  window.deleteStudent = deleteStudent;
+  window.addRow = addRow;
+  window.addBulkNames = addBulkNames;
+  window.clearAllData = clearAllData;
+  window.filterTable = filterTable;
+  window.exportCSV = exportCSV;
 
-  // Real-time listener
-  onSnapshot(collection(db, 'students'), (snapshot) => {
-    rows = [];
-    snapshot.forEach((d) => {
-      rows.push({ firebaseId: d.id, ...d.data() });
-    });
-    renderTable();
-    updateStats();
-    updateLastUpdated();
-  });
+  loadData();
 </script>
 </body>
 </html>
