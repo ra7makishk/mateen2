@@ -687,7 +687,19 @@ updateStats();
 
 }
 
-onSnapshot(collection(db,"students"),(snapshot)=>{
+import {
+  query,
+  orderBy
+}
+from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+const studentsQuery =
+query(
+  collection(db,"students"),
+  orderBy("order")
+);
+
+onSnapshot(studentsQuery,(snapshot)=>{
 
 students = [];
 
@@ -708,7 +720,8 @@ window.addRow = async function(){
 
 await addDoc(collection(db,"students"),{
 
-name:'',
+order: Date.now() + i,
+name:name.trim(),
 day:'',
 hour:'',
 minute:'00',
@@ -732,9 +745,17 @@ if(!text.trim()) return;
 const names =
 text.split('\n').filter(n=>n.trim());
 
-for(const name of names){
+for(let i = 0; i < names.length; i++){
+
+const name = names[i];
 
 await addDoc(collection(db,"students"),{
+
+order: Date.now(),
+
+order: Date.now(),
+
+order: Date.now(),
 
 name:name.trim(),
 day:'',
